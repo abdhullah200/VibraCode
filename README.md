@@ -28,6 +28,6 @@ Stay tuned for updates and early access.
 [![GitHub Forks](https://img.shields.io/github/forks/abdhullah200/Bloggy?style=social)](https://github.com/abdhullah200/Bloggy/fork)
 [![GitHub Issues](https://img.shields.io/github/issues/abdhullah200/Bloggy)](https://github.com/abdhullah200/Bloggy/issues)
 
-*Built with React 19, Node.js, MongoDB, and a passion for great user experiences.*
+
 
 </div>
