@@ -24,9 +24,9 @@ Stay tuned for updates and early access.
 
 **If you found this project helpful, please consider giving it a ⭐ on GitHub!**
 
-[![GitHub Stars](https://img.shields.io/github/stars/abdhullah200/Bloggy?style=social)](https://github.com/abdhullah200/Bloggy)
-[![GitHub Forks](https://img.shields.io/github/forks/abdhullah200/Bloggy?style=social)](https://github.com/abdhullah200/Bloggy/fork)
-[![GitHub Issues](https://img.shields.io/github/issues/abdhullah200/Bloggy)](https://github.com/abdhullah200/Bloggy/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/abdhullah200/VibraCode?style=social)](https://github.com/abdhullah200/VibraCode)
+[![GitHub Forks](https://img.shields.io/github/forks/abdhullah200/VibraCode?style=social)](https://github.com/abdhullah200/VibraCode/fork)
+[![GitHub Issues](https://img.shields.io/github/issues/abdhullah200/VibraCode)](https://github.com/abdhullah200/VibraCode/issues)
 
 
 
