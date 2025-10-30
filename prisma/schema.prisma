@@ -5,8 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../lib/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -14,10 +13,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+  PREMIUM_USER
+}
+
 model User{
-  id String @id @map("_id")
-  name String
-  email String
+  id String @id @default(cuid()) @map("_id")
+  name String?
+  email String @unique
+  image String?
+  
+  accounts Account[]
+  role Role @default(USER)
   create DateTime @default(now())
   updateAt DateTime @updatedAt
+}
+model Account {
+  id                String  @id @default(cuid()) @map("_id") 
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @map("refresh_token") 
+  access_token      String? @map("access_token")
+  expires_at        Int? @map("expires_at")
+  token_type        String? @map("token_type")
+  scope             String?
+  id_token          String? @map("id_token")
+  session_state     String? @map("session_state")
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@unique([provider, providerAccountId])
 }
