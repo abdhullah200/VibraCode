@@ -14,7 +14,8 @@ It features real-time code execution powered by **WebContainers**, **AI-assisted
 
 ### 🛠️ Status
 🚧 **Currently in development — coming soon!**  
-Stay tuned for updates and early access.
+Stay tuned for updates and early access.<br/>
+
 Current progess Phrase 3 out of 14
 ---
 
