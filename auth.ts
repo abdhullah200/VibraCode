@@ -1,9 +1,10 @@
-import NextAuth from "next-auth"
-import { PrismaAdapter } from "@auth/prisma-adapter"
+import NextAuth from "next-auth";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import authConfig from "./auth.config";
 import { db } from "./lib/db";
 import { getAccountByUserId, getUserById } from "@/features/auth/action";
+
 
  
 
@@ -38,13 +39,13 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 type: account.type,
                 provider: account.provider,
                 providerAccountId: account.providerAccountId,
-                refresh_token: account.refresh_token,
-                access_token: account.access_token,
-                expires_at: account.expires_at ?? null,
-                token_type: account.token_type,
-                scope: account.scope,
-                id_token: account.id_token,
-                session_state: sessionState,
+                refreshToken: account.refresh_token ?? null,
+                accessToken: account.access_token ?? null,
+                expiresAt: account.expires_at ?? null,
+                tokenType: account.token_type ?? null,
+                scope: account.scope ?? null,
+                idToken: account.id_token ?? null,
+                sessionState,
               },
             },
           },
@@ -72,13 +73,13 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
               type: account.type,
               provider: account.provider,
               providerAccountId: account.providerAccountId,
-              refresh_token: account.refresh_token,
-              access_token: account.access_token,
-              expires_at: account.expires_at ?? null,
-              token_type: account.token_type,
-              scope: account.scope,
-              id_token: account.id_token,
-              session_state: fallbackSessionState,
+              refreshToken: account.refresh_token ?? null,
+              accessToken: account.access_token ?? null,
+              expiresAt: account.expires_at ?? null,
+              tokenType: account.token_type ?? null,
+              scope: account.scope ?? null,
+              idToken: account.id_token ?? null,
+              sessionState: fallbackSessionState,
             },
           });
         }
@@ -97,12 +98,12 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (!existingUser) return token;
 
       const existingAccount = await getAccountByUserId(existingUser.id);
-      if (existingAccount) {
+      if (existingAccount?.provider) {
         token.provider = existingAccount.provider;
       }
 
-      token.name = existingUser.name;
-      token.email = existingUser.email;
+      token.name = existingUser.name ?? token.name;
+      token.email = existingUser.email ?? token.email;
       token.role = existingUser.role;
 
       return token;
@@ -110,15 +111,12 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
     async session({ session, token }) {
       // Attach the user ID from the token to the session
-    if(token.sub  && session.user){
-      session.user.id = token.sub
-    } 
+      if (token.sub && session.user) {
+        session.user.id = token.sub;
+        session.user.role = token.role as typeof session.user.role;
+      }
 
-    if(token.sub && session.user){
-      session.user.role = token.role
-    }
-
-    return session;
+      return session;
     },
   },
   

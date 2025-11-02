@@ -6,11 +6,11 @@ const SignInPage = () => {
   return (
     <div className="space-y-6 flex flex-col justify-center">
       <Image
-        src="/logo.svg"
+        src="/logo.png"
         alt="Vibracode Logo"
-        width={100}
-        height={100}
-        className="mb-8"
+        width={180}
+        height={180}
+        className="mx-auto mb-2 drop-shadow-lg"
         priority
       />
       <SignInFormClient />

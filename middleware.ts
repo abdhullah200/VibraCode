@@ -7,7 +7,7 @@ import {
     authRoutes,
     DEFAULT_LOGIN_REDIRECT,
     publicRoutes,
-} from "./app/api/auth/[...nextauth]/route";
+} from "./routes";
 
 export async function middleware(req: NextRequest) {
     const token = await getToken({

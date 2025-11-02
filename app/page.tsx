@@ -1,11 +1,10 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import UserButton from "@/features/auth/components/user-button";
 
 export default function Home() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello, Next.js!</h1>
-      <Button>Click me</Button>
-    </div>
+    <main className="flex min-h-screen flex-col items-start gap-4 bg-background p-6">
+      <h1 className="text-3xl font-bold tracking-tight text-foreground">Hello, Next.js!</h1>
+      <UserButton />
+    </main>
   );
 }
