@@ -10,7 +10,7 @@ interface EmptyStateProps {
 const EmptyState = ({ title, description, imageSrc = "/empty-state.svg" }: EmptyStateProps) => {
     return(
         <div className="flex flex-col items-center justify-center py-16">
-            <Image src={imageSrc} alt={title} className="w-48 h-48 mb-4" height={192} width={192}/>
+            <Image src={imageSrc!} alt={title} className="w-48 h-48 mb-4" height={192} width={192}/>
             <h2 className="text-xl font-semibold text-gray-500">
                 {title}
             </h2>
