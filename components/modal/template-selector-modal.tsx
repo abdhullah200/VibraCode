@@ -237,7 +237,7 @@ const TemplateSelectionModal = ({
         }
       }}
     >
-      <DialogContent className=" max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         {step === "select" ? (
           <>
             <DialogHeader>

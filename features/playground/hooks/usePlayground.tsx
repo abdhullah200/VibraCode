@@ -5,6 +5,14 @@ import { set } from 'date-fns';
 import { id, th } from 'date-fns/locale';
 import { getPlaygroundById, SaveUpdatedCode } from '../actions/index';
 
+interface GitHubRepoMetadata {
+  isGitHubRepo: boolean;
+  repoId: string;
+  fullName: string;
+  cloneUrl: string;
+  defaultBranch: string;
+}
+
 interface PlaygroundData {
   id: string;
   title?: string;
@@ -38,6 +46,43 @@ export const usePlayground = (id: string): UsePlaygroundReturn => {
       setPlaygroundData(data);
 
       const rawContent = data?.templateFiles?.[0]?.content;
+      
+      // Check if this is a GitHub repository
+      const isGitHubRepo = (content: any): content is GitHubRepoMetadata => {
+        return (
+          content &&
+          typeof content === 'object' &&
+          !Array.isArray(content) &&
+          'isGitHubRepo' in content &&
+          content.isGitHubRepo === true &&
+          'repoId' in content &&
+          'fullName' in content
+        );
+      };
+
+      if (isGitHubRepo(rawContent)) {
+        console.log('Loading GitHub repository:', rawContent);
+        
+        // Fetch repository contents from GitHub
+        const repoResponse = await fetch(
+          `/api/github/repo-tree?repoId=${rawContent.repoId}`
+        );
+        
+        if (!repoResponse.ok) {
+          throw new Error('Failed to fetch repository contents from GitHub');
+        }
+        
+        const repoData = await repoResponse.json();
+        
+        if (repoData.templateData) {
+          setTemplateData(repoData.templateData);
+          toast.success(`Loaded ${rawContent.fullName} from GitHub`);
+        } else {
+          throw new Error('No template data returned from GitHub');
+        }
+        return;
+      }
+      
       if (typeof rawContent === "string") {
         const parsedContent = JSON.parse(rawContent);
         setTemplateData(parsedContent);

@@ -25,9 +25,10 @@ model User {
 
   // chatMessages ChatMessage[] // to be added later
 
-  staredPlayground Playground[]
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
+  staredPlayground     Playground[]
+  connectedRepositories GitHubRepository[]
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
 }
 
 model Account {
@@ -94,4 +95,25 @@ model StarMark {
   playground   Playground @relation(fields: [playgroundId], references: [id], onDelete: Cascade)
 
   @@unique([userId, playgroundId])
+}
+
+model GitHubRepository {
+  id            String   @id @default(cuid()) @map("_id")
+  userId        String
+  repoId        String   // GitHub repository ID
+  repoName      String   // Repository name
+  fullName      String   // Full name (owner/repo)
+  owner         String   // Repository owner
+  description   String?
+  url           String   // Repository URL
+  defaultBranch String   @default("main")
+  isPrivate     Boolean  @default(false)
+  cloneUrl      String   // Clone URL
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, repoId])
+  @@index([userId])
 }
