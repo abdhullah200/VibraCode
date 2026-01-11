@@ -12,21 +12,23 @@ const DashboardMainPage = async () => {
   const { repositories } = await getConnectedRepositories();
   
   return (
-    <div className="flex flex-col justify-start items-center min-h-screen mx-auto max-w-7xl px-4 py-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+    <div className="flex flex-col justify-start items-center min-h-screen w-full px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6 w-full max-w-[1400px]">
         <AddNewButton />
         <AddRepo />
       </div>
       
-      <ConnectedRepos repositories={repositories || []} />
+      <div className="w-full max-w-[1400px]">
+        <ConnectedRepos repositories={repositories || []} />
+      </div>
       
-      <div className="mt-10 flex flex-col justify-center items-center w-full">
+      <div className="mt-4 sm:mt-6 lg:mt-10 flex flex-col justify-center items-center w-full max-w-[1400px]">
         {playgrounds && playgrounds.length === 0 ? (
           
           <EmptyState title="No projects found" description="Create a new project to get started!" imageSrc='/empty-state.svg'/>
         ) : (
           <ClientProjectTable
-          //@ts-ignore
+          
             projects={playgrounds||[]}
         />
         )

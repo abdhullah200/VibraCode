@@ -237,7 +237,10 @@ const TemplateSelectionModal = ({
         }
       }}
     >
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent
+        className={`max-h-[90vh] overflow-y-auto scrollbar-thin ${step === "configure" ? "sm:max-w-lg max-w-4xl" : ""}`}
+        style={step === "select" ? { maxWidth: "95vw", width: "95vw" } : undefined}
+      >
         {step === "select" ? (
           <>
             <DialogHeader>
@@ -283,7 +286,7 @@ const TemplateSelectionModal = ({
                 value={selectedTemplate || ""}
                 onValueChange={handleSelectTemplate}
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className={`grid gap-4 ${step === "select" ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 md:grid-cols-2"}`}>
                   {filteredTemplates.length > 0 ? (
                     filteredTemplates.map((template) => (
                       <div
@@ -331,16 +334,10 @@ const TemplateSelectionModal = ({
                                   <Code size={14} className="text-blue-500" />
                                 )}
                                 {template.category === "backend" && (
-                                  <Server
-                                    size={14}
-                                    className="text-green-500"
-                                  />
+                                  <Server size={14} className="text-green-500" />
                                 )}
                                 {template.category === "fullstack" && (
-                                  <Globe
-                                    size={14}
-                                    className="text-purple-500"
-                                  />
+                                  <Globe size={14} className="text-purple-500" />
                                 )}
                               </div>
                             </div>

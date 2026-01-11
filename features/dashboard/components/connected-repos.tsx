@@ -104,15 +104,15 @@ export function ConnectedRepos({ repositories: initialRepos }: ConnectedReposPro
 
   return (
     <>
-      <Card className="w-full mt-8">
+      <Card className="w-full mt-6 sm:mt-8">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Github className="w-5 h-5" />
+          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+            <Github className="w-4 h-4 sm:w-5 sm:h-5" />
             Connected Repositories
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
             {repositories.map((repo) => (
               <div
                 key={repo.id}
