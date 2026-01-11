@@ -175,62 +175,75 @@ export default function ProjectTable({
 
   return (
     <>
-      <div className="border rounded-lg overflow-hidden">
+      <div className="border rounded-lg overflow-hidden w-full">
+        <div className="w-full overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Project</TableHead>
-              <TableHead>Template</TableHead>
-              <TableHead>Created</TableHead>
-              <TableHead>User</TableHead>
-              <TableHead className="w-12.5">Actions</TableHead>
+              <TableHead className="max-w-[200px]">Project</TableHead>
+              <TableHead className="hidden sm:table-cell w-[100px]">Template</TableHead>
+              <TableHead className="hidden lg:table-cell w-[110px]">Created</TableHead>
+              <TableHead className="hidden md:table-cell w-[140px]">User</TableHead>
+              <TableHead className="w-[50px] text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {projects.map((project) => (
               <TableRow key={project.id}>
-                <TableCell className="font-medium">
-                  <div className="flex flex-col">
+                <TableCell className="font-medium max-w-[200px]">
+                  <div className="flex flex-col gap-1 max-w-full">
                     <Link
                       href={`/playground/${project.id}`}
-                      className="hover:underline"
+                      className="hover:underline truncate block"
                     >
-                      <span className="font-semibold">{project.title}</span>
+                      <span className="font-semibold text-sm truncate">{project.title}</span>
                     </Link>
-                    <span className="text-sm text-gray-500 line-clamp-1">
+                    <span className="text-xs text-gray-500 truncate block">
                       {project.description}
                     </span>
+                    {/* Show template and date on mobile */}
+                    <div className="flex flex-wrap gap-2 sm:hidden mt-1">
+                      <Badge
+                        variant="outline"
+                        className="bg-[#E93F3F15] text-[#3f6ce9] border-[#3f6ce9] text-xs"
+                      >
+                        {project.template}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">
+                        {format(new Date(project.createdAt), "MMM d, yyyy")}
+                      </span>
+                    </div>
                   </div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden sm:table-cell w-[100px]">
                   <Badge
                     variant="outline"
-                    className="bg-[#E93F3F15] text-[#3f6ce9] border-[#3f6ce9]"
+                    className="bg-[#E93F3F15] text-[#3f6ce9] border-[#3f6ce9] text-[10px] px-1.5 py-0.5 whitespace-nowrap"
                   >
                     {project.template}
                   </Badge>
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden lg:table-cell text-xs w-[110px] whitespace-nowrap">
                   {format(new Date(project.createdAt), "MMM d, yyyy")}
                 </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full overflow-hidden">
+                <TableCell className="hidden md:table-cell w-[140px]">
+                  <div className="flex items-center gap-1.5 max-w-[140px]">
+                    <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0">
                       <Image
                         src={project.user.image || "/placeholder.svg"}
                         alt={project.user.name}
-                        width={32}
-                        height={32}
+                        width={24}
+                        height={24}
                         className="object-cover"
                       />
                     </div>
-                    <span className="text-sm">{project.user.name}</span>
+                    <span className="text-xs truncate">{project.user.name}</span>
                   </div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="w-[50px]">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <Button variant="ghost" size="icon" className="h-7 w-7">
                         <MoreHorizontal className="h-4 w-4" />
                         <span className="sr-only">Open menu</span>
                       </Button>
@@ -295,6 +308,7 @@ export default function ProjectTable({
             ))}
           </TableBody>
         </Table>
+        </div>
       </div>
 
       {/* Edit Project Dialog */}
