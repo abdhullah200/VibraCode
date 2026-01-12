@@ -109,3 +109,53 @@ export const duplicateProjectById = async (id: string) => {
         console.log("Error duplicating playground:", error);
     }
 }
+
+export const toggleStarPlayground = async (playgroundId: string) => {
+    const user = await auth();
+    
+    if (!user?.user?.id) {
+        throw new Error("Unauthorized");
+    }
+
+    try {
+        // Check if a star mark already exists
+        const existingStarMark = await db.starMark.findUnique({
+            where: {
+                userId_playgroundId: {
+                    userId: user.user.id,
+                    playgroundId: playgroundId,
+                },
+            },
+        });
+
+        if (existingStarMark) {
+            // Toggle the isMarked field
+            await db.starMark.update({
+                where: {
+                    userId_playgroundId: {
+                        userId: user.user.id,
+                        playgroundId: playgroundId,
+                    },
+                },
+                data: {
+                    isMarked: !existingStarMark.isMarked,
+                },
+            });
+        } else {
+            // Create a new star mark
+            await db.starMark.create({
+                data: {
+                    userId: user.user.id,
+                    playgroundId: playgroundId,
+                    isMarked: true,
+                },
+            });
+        }
+
+        revalidatePath("/dashboard");
+        return { success: true };
+    } catch (error) {
+        console.log("Error toggling star:", error);
+        throw error;
+    }
+}

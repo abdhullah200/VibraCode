@@ -7,15 +7,17 @@ import { Star } from "lucide-react";
 interface MarkedToggleButtonProps {
   markedForRevision?: boolean;
   id: string;
+  onToggle?: (id: string) => void;
 }
 
-export function MarkedToggleButton({ markedForRevision = false, id }: MarkedToggleButtonProps) {
+export function MarkedToggleButton({ markedForRevision = false, id, onToggle }: MarkedToggleButtonProps) {
   const [isMarked, setIsMarked] = useState(markedForRevision);
 
   const handleToggle = () => {
     setIsMarked(!isMarked);
-    // Add your toggle logic here
-    console.log(`Toggle star for project ${id}: ${!isMarked}`);
+    if (onToggle) {
+      onToggle(id);
+    }
   };
 
   return (

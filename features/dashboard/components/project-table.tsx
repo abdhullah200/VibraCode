@@ -231,7 +231,7 @@ export default function ProjectTable({
                     <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0">
                       <Image
                         src={project.user.image || "/placeholder.svg"}
-                        alt={project.user.name}
+                        alt={project.user.name || "User"}
                         width={24}
                         height={24}
                         className="object-cover"
@@ -253,6 +253,7 @@ export default function ProjectTable({
                         <MarkedToggleButton
                           markedForRevision={project.Starmark[0]?.isMarked}
                           id={project.id}
+                          onToggle={() => handleMarkasFavorite(project)}
                         />
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
