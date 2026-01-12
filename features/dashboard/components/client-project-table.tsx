@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { deletePlaygroundById, editPlaygroundById, duplicateProjectById } from "@/features/dashboard/action";
+import { deletePlaygroundById, editPlaygroundById, duplicateProjectById, toggleStarPlayground } from "@/features/dashboard/action";
 import ProjectTable from "./project-table";
 import type { Project } from "../types";
 
@@ -46,12 +46,24 @@ export default function ClientProjectTable({ projects }: ClientProjectTableProps
     }
   };
 
+  const handleToggleFavorite = async (id: string) => {
+    try {
+      await toggleStarPlayground(id);
+      toast.success("Favorite status updated");
+      router.refresh(); // Refresh to update the list
+    } catch (error) {
+      toast.error("Failed to update favorite status");
+      console.error("Error toggling favorite:", error);
+    }
+  };
+
   return (
     <ProjectTable
       projects={projects}
       onDeleteProject={handleDeleteProject}
       onUpdateProject={handleUpdateProject}
       onDuplicateProject={handleDuplicateProject}
+      onMarkasFavorite={handleToggleFavorite}
     />
   );
 }

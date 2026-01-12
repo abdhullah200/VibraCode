@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   Code2,
   Compass,
@@ -36,6 +36,9 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import Image from "next/image"
+import TemplateSelectionModal from "@/components/modal/template-selector-modal"
+import { createPlayground } from "@/features/dashboard/action"
+import { toast } from "sonner"
 
 // Define the interface for a single playground item, icon is now a string
 interface PlaygroundData {
@@ -57,12 +60,44 @@ const lucideIconMap: Record<string, LucideIcon> = {
   // Add any other icons you might use dynamically
 }
 
+// Starter template types
+const STARTER_TEMPLATES = ["REACT", "NEXTJS", "EXPRESS", "VUE", "HONO", "ANGULAR"];
+
 export function DashboardSidebar({ initialPlaygroundData }: { initialPlaygroundData: PlaygroundData[] }) {
   const pathname = usePathname()
-  const [starredPlaygrounds, setStarredPlaygrounds] = useState(initialPlaygroundData.filter((p) => p.starred))
-  const [recentPlaygrounds, setRecentPlaygrounds] = useState(initialPlaygroundData)
+  const router = useRouter()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  
+  const recentPlaygrounds = initialPlaygroundData.slice(0, 5) // Show last 5 recent items
+
+  const handleCreatePlayground = async (data: {
+    title: string;
+    template: "REACT" | "NEXTJS" | "EXPRESS" | "VUE" | "HONO" | "ANGULAR";
+    description?: string;
+  }) => {
+    try {
+      const result = await createPlayground({
+        title: data.title,
+        template: data.template,
+        description: data.description,
+        userId: ""
+      });
+
+      if (result) {
+        toast.success("Playground created successfully!");
+        setIsModalOpen(false);
+        router.refresh();
+      } else {
+        toast.error("Failed to create playground. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error creating playground:", error);
+      toast.error("An error occurred while creating the playground.");
+    }
+  }
 
   return (
+    <>
     <Sidebar variant="inset" collapsible="icon" className="border border-r">
       <SidebarHeader>
         <div className="flex items-center gap-2 px-4 py-3 justify-center">
@@ -95,76 +130,46 @@ export function DashboardSidebar({ initialPlaygroundData }: { initialPlaygroundD
 
         <SidebarGroup>
           <SidebarGroupLabel>
-            <Star className="h-4 w-4 mr-2" />
-            Starred
-          </SidebarGroupLabel>
-          <SidebarGroupAction title="Add starred playground">
-            <Plus className="h-4 w-4" />
-          </SidebarGroupAction>
-          <SidebarGroupContent>
-            <SidebarMenu>
-
-              {starredPlaygrounds.length === 0 && recentPlaygrounds.length === 0 ? (
-                <div className="text-center text-muted-foreground py-4 w-full">Create your playground</div>
-              ) : (
-                starredPlaygrounds.map((playground) => {
-                  const IconComponent = lucideIconMap[playground.icon] || Code2;
-                  return (
-                    <SidebarMenuItem key={playground.id}>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={pathname === `/playground/${playground.id}`}
-                        tooltip={playground.name}
-                      >
-                        <Link href={`/playground/${playground.id}`}>
-                          {IconComponent && <IconComponent className="h-4 w-4" />}
-                          <span>{playground.name}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  );
-                })
-              )}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>
             <History className="h-4 w-4 mr-2" />
             Recent
           </SidebarGroupLabel>
-          <SidebarGroupAction title="Create new playground">
+          <SidebarGroupAction title="Create new playground" onClick={() => setIsModalOpen(true)}>
             <FolderPlus className="h-4 w-4" />
           </SidebarGroupAction>
           <SidebarGroupContent>
             <SidebarMenu>
-              {starredPlaygrounds.length === 0 && recentPlaygrounds.length === 0 ? null : (
-                recentPlaygrounds.map((playground) => {
-                  const IconComponent = lucideIconMap[playground.icon] || Code2;
-                  return (
-                    <SidebarMenuItem key={playground.id}>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={pathname === `/playground/${playground.id}`}
-                        tooltip={playground.name}
-                      >
-                        <Link href={`/playground/${playground.id}`}>
-                          {IconComponent && <IconComponent className="h-4 w-4" />}
-                          <span>{playground.name}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  );
-                })
+              {recentPlaygrounds.length === 0 ? (
+                <div className="text-center text-muted-foreground py-4 w-full px-2 text-sm">
+                  Create your first playground
+                </div>
+              ) : (
+                <>
+                  {recentPlaygrounds.map((playground) => {
+                    const IconComponent = lucideIconMap[playground.icon] || Code2;
+                    return (
+                      <SidebarMenuItem key={playground.id}>
+                        <SidebarMenuButton
+                          asChild
+                          isActive={pathname === `/playground/${playground.id}`}
+                          tooltip={playground.name}
+                        >
+                          <Link href={`/playground/${playground.id}`}>
+                            {IconComponent && <IconComponent className="h-4 w-4" />}
+                            <span>{playground.name}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    );
+                  })}
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip="View all">
+                      <Link href="/dashboard">
+                        <span className="text-sm text-muted-foreground">View all playgrounds</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </>
               )}
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="View all">
-                  <Link href="/playgrounds">
-                    <span className="text-sm text-muted-foreground">View all playgrounds</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -183,6 +188,12 @@ export function DashboardSidebar({ initialPlaygroundData }: { initialPlaygroundD
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
+    <TemplateSelectionModal 
+      isOpen={isModalOpen} 
+      onClose={() => setIsModalOpen(false)} 
+      onSubmit={handleCreatePlayground}
+    />
+    </>
   )
 }
 export default DashboardSidebar
