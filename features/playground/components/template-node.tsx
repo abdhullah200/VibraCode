@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogFooter, DialogHeader } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
+import { getFileIcon } from '../lib/file-icons'
 
 
 interface TemplateNodeProps {
@@ -22,6 +23,7 @@ interface TemplateNodeProps {
     onDeleteFile?: (file: TemplateFile, parentPath:string) => void
     onRenameFile?: (file:TemplateFile, newFilename:string,newExstion: string,parentPath:string) => void
     onRenameFolder?: (folder:TemplateFolder, newFoldername:string,parentPath:string) => void
+    theme?: string
 }
 
 const TemplateNode = ({
@@ -36,6 +38,7 @@ const TemplateNode = ({
     onDeleteFile,
     onRenameFile,
     onRenameFolder,
+    theme = 'modern-dark',
 }: TemplateNodeProps) => {
     const isValidItem = item && typeof item === "object";
     const isFolder = isValidItem && 'folderName' in item;
@@ -157,6 +160,7 @@ const TemplateNode = ({
                                     onDeleteFile={onDeleteFile}
                                     onRenameFile={onRenameFile}
                                     onRenameFolder={onRenameFolder}
+                                    theme={theme}
                                 />
                             ))}
                         </SidebarMenuSub>
@@ -221,7 +225,9 @@ const TemplateNode = ({
         <SidebarMenuItem>
             <div className='flex items-center group'>
                 <SidebarMenuButton className='flex-1' onClick={() => onFileSelect?.(file)}>
-                    <File className="h-4 w-4 mr-2 shrink-0"/>
+                    <span className="mr-2 shrink-0">
+                        {getFileIcon(file.fileExtension)}
+                    </span>
                     <span>{fileName}</span>
                 </SidebarMenuButton>
                 <DropdownMenu>

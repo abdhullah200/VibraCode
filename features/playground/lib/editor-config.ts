@@ -53,7 +53,7 @@ export const getEditorLanguage = (fileExtension: string): string => {
   return languageMap[extension] || "plaintext";
 };
 
-export const configureMonaco = (monaco: Monaco) => {
+export const configureMonaco = (monaco: Monaco, theme?: string) => {
   // Define a beautiful modern dark theme
   monaco.editor.defineTheme("modern-dark", {
     base: "vs-dark",
@@ -220,8 +220,181 @@ export const configureMonaco = (monaco: Monaco) => {
     },
   });
 
+  // GitHub Dark theme
+  monaco.editor.defineTheme("github-dark", {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+      { token: "comment", foreground: "8B949E", fontStyle: "italic" },
+      { token: "keyword", foreground: "FF7B72" },
+      { token: "string", foreground: "A5D6FF" },
+      { token: "number", foreground: "79C0FF" },
+      { token: "entity.name.function", foreground: "D2A8FF" },
+      { token: "variable", foreground: "FFA657" },
+    ],
+    colors: {
+      "editor.background": "#0D1117",
+      "editor.foreground": "#C9D1D9",
+      "editor.lineHighlightBackground": "#161B22",
+      "editorCursor.foreground": "#58A6FF",
+      "editor.selectionBackground": "#1F6FEB40",
+    },
+  });
+
+  // Monokai theme
+  monaco.editor.defineTheme("monokai", {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+      { token: "comment", foreground: "75715E", fontStyle: "italic" },
+      { token: "keyword", foreground: "F92672" },
+      { token: "string", foreground: "E6DB74" },
+      { token: "number", foreground: "AE81FF" },
+      { token: "entity.name.function", foreground: "A6E22E" },
+      { token: "variable", foreground: "F8F8F2" },
+      { token: "entity.name.type", foreground: "66D9EF" },
+    ],
+    colors: {
+      "editor.background": "#272822",
+      "editor.foreground": "#F8F8F2",
+      "editor.lineHighlightBackground": "#3E3D32",
+      "editorCursor.foreground": "#F8F8F0",
+      "editor.selectionBackground": "#49483E",
+    },
+  });
+
+  // Solarized Dark theme
+  monaco.editor.defineTheme("solarized-dark", {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+      { token: "comment", foreground: "586E75", fontStyle: "italic" },
+      { token: "keyword", foreground: "859900" },
+      { token: "string", foreground: "2AA198" },
+      { token: "number", foreground: "D33682" },
+      { token: "entity.name.function", foreground: "268BD2" },
+      { token: "variable", foreground: "839496" },
+    ],
+    colors: {
+      "editor.background": "#002B36",
+      "editor.foreground": "#839496",
+      "editor.lineHighlightBackground": "#073642",
+      "editorCursor.foreground": "#D30102",
+      "editor.selectionBackground": "#073642",
+    },
+  });
+
+  // Solarized Light theme
+  monaco.editor.defineTheme("solarized-light", {
+    base: "vs",
+    inherit: true,
+    rules: [
+      { token: "comment", foreground: "93A1A1", fontStyle: "italic" },
+      { token: "keyword", foreground: "859900" },
+      { token: "string", foreground: "2AA198" },
+      { token: "number", foreground: "D33682" },
+      { token: "entity.name.function", foreground: "268BD2" },
+      { token: "variable", foreground: "657B83" },
+    ],
+    colors: {
+      "editor.background": "#FDF6E3",
+      "editor.foreground": "#657B83",
+      "editor.lineHighlightBackground": "#EEE8D5",
+      "editorCursor.foreground": "#D30102",
+      "editor.selectionBackground": "#EEE8D5",
+    },
+  });
+
+  // Dracula theme
+  monaco.editor.defineTheme("dracula", {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+      { token: "comment", foreground: "6272A4", fontStyle: "italic" },
+      { token: "keyword", foreground: "FF79C6" },
+      { token: "string", foreground: "F1FA8C" },
+      { token: "number", foreground: "BD93F9" },
+      { token: "entity.name.function", foreground: "50FA7B" },
+      { token: "variable", foreground: "F8F8F2" },
+      { token: "entity.name.type", foreground: "8BE9FD" },
+    ],
+    colors: {
+      "editor.background": "#282A36",
+      "editor.foreground": "#F8F8F2",
+      "editor.lineHighlightBackground": "#44475A",
+      "editorCursor.foreground": "#F8F8F0",
+      "editor.selectionBackground": "#44475A",
+    },
+  });
+
+  // Nord theme
+  monaco.editor.defineTheme("nord", {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+      { token: "comment", foreground: "616E88", fontStyle: "italic" },
+      { token: "keyword", foreground: "81A1C1" },
+      { token: "string", foreground: "A3BE8C" },
+      { token: "number", foreground: "B48EAD" },
+      { token: "entity.name.function", foreground: "88C0D0" },
+      { token: "variable", foreground: "D8DEE9" },
+      { token: "entity.name.type", foreground: "8FBCBB" },
+    ],
+    colors: {
+      "editor.background": "#2E3440",
+      "editor.foreground": "#D8DEE9",
+      "editor.lineHighlightBackground": "#3B4252",
+      "editorCursor.foreground": "#D8DEE9",
+      "editor.selectionBackground": "#434C5E",
+    },
+  });
+
+  // Coffee theme
+  monaco.editor.defineTheme("coffee", {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+      { token: "comment", foreground: "8D8687", fontStyle: "italic" },
+      { token: "keyword", foreground: "C48D62" },
+      { token: "string", foreground: "B5CEA8" },
+      { token: "number", foreground: "D19A66" },
+      { token: "entity.name.function", foreground: "E5C07B" },
+      { token: "variable", foreground: "C9B199" },
+      { token: "entity.name.type", foreground: "A89984" },
+    ],
+    colors: {
+      "editor.background": "#32302F",
+      "editor.foreground": "#C9B199",
+      "editor.lineHighlightBackground": "#3C3836",
+      "editorCursor.foreground": "#FBF1C7",
+      "editor.selectionBackground": "#504945",
+    },
+  });
+
+  // Night Owl theme
+  monaco.editor.defineTheme("night-owl", {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+      { token: "comment", foreground: "637777", fontStyle: "italic" },
+      { token: "keyword", foreground: "C792EA" },
+      { token: "string", foreground: "ECC48D" },
+      { token: "number", foreground: "F78C6C" },
+      { token: "entity.name.function", foreground: "82AAFF" },
+      { token: "variable", foreground: "D6DEEB" },
+      { token: "entity.name.type", foreground: "FFCB8B" },
+    ],
+    colors: {
+      "editor.background": "#011627",
+      "editor.foreground": "#D6DEEB",
+      "editor.lineHighlightBackground": "#010E1A",
+      "editorCursor.foreground": "#80A4C2",
+      "editor.selectionBackground": "#1D3B53",
+    },
+  });
+
   // Set the theme
-  monaco.editor.setTheme("modern-dark");
+  monaco.editor.setTheme(theme || "modern-dark");
   
   // Configure additional editor settings
   monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({

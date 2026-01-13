@@ -17,6 +17,7 @@ interface PlaygroundEditorProps {
   onAcceptSuggestion: (editor: any, monaco: any) => void
   onRejectSuggestion: (editor: any) => void
   onTriggerSuggestion: (type: string, editor: any) => void
+  theme?: string
 }
 
 export const PlaygroundEditor = ({
@@ -29,6 +30,7 @@ export const PlaygroundEditor = ({
   onAcceptSuggestion,
   onRejectSuggestion,
   onTriggerSuggestion,
+  theme = 'modern-dark',
 }: PlaygroundEditorProps) => {
   const editorRef = useRef<any>(null)
   const monacoRef = useRef<Monaco | null>(null)
@@ -42,6 +44,13 @@ export const PlaygroundEditor = ({
   const suggestionAcceptedRef = useRef(false)
   const suggestionTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const tabCommandRef = useRef<any>(null)
+
+  // Handle theme changes
+  useEffect(() => {
+    if (monacoRef.current && editorRef.current) {
+      monacoRef.current.editor.setTheme(theme)
+    }
+  }, [theme])
 
   // Generate unique ID for each suggestion
   const generateSuggestionId = () => `suggestion-${Date.now()}-${Math.random()}`
@@ -271,7 +280,7 @@ export const PlaygroundEditor = ({
       cursorSmoothCaretAnimation: "on",
     })
 
-    configureMonaco(monaco)
+    configureMonaco(monaco, theme)
 
     // Keyboard shortcuts
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Space, () => {
@@ -479,6 +488,7 @@ export const PlaygroundEditor = ({
         onMount={handleEditorDidMount}
         language={activeFile ? getEditorLanguage(activeFile.fileExtension || "") : "plaintext"}
         options={defaultEditorOptions}
+        theme={theme}
       />
     </div>
   )
