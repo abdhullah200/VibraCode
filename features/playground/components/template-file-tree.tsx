@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { set } from 'zod'
+import { getThemeColors } from '../lib/theme-colors'
 
 interface TemplateFileTreeProps {
     data: TemplateItem
@@ -22,6 +23,7 @@ interface TemplateFileTreeProps {
     onDeleteFile?: (file: TemplateFile, parentPath:string) => void
     onRenameFile?: (file:TemplateFile, newFilename:string,newExstion: string,parentPath:string) => void
     onRenameFolder?: (folder:TemplateFolder, newFoldername:string,parentPath:string) => void
+    theme?: string
 }
 const TemplateFileTree = ({
     data,
@@ -34,11 +36,14 @@ const TemplateFileTree = ({
     onDeleteFile,
     onRenameFile,
     onRenameFolder,
+    theme = 'modern-dark',
 }:TemplateFileTreeProps) => {
 
     const isRootFolder = data && typeof data === 'object' && 'folderName' in data;
     const [isNewFileModalOpen, setIsNewFileModalOpen] = React.useState(false);
     const [isNewFolderModalOpen, setIsNewFolderModalOpen] = React.useState(false);
+    
+    const themeColors = getThemeColors(theme);
 
     const handleAddRootFile = ()=>{
         setIsNewFileModalOpen(true);  
@@ -72,7 +77,7 @@ const TemplateFileTree = ({
   }
 
   return (
-        <Sidebar>
+        <Sidebar className={`${themeColors.background} ${themeColors.foreground} ${themeColors.border}`}>
         <SidebarContent>
             <SidebarGroup>
                 <SidebarGroupLabel>
@@ -112,6 +117,7 @@ const TemplateFileTree = ({
                                 onDeleteFile={onDeleteFile}
                                 onRenameFile={onRenameFile}
                                 onRenameFolder={onRenameFolder}
+                                theme={theme}
                             />
                         ))
                     ) : (
@@ -127,6 +133,7 @@ const TemplateFileTree = ({
                             onDeleteFile={onDeleteFile}
                             onRenameFile={onRenameFile}
                             onRenameFolder={onRenameFolder}
+                            theme={theme}
                         />
                     ))}
                 </SidebarGroupContent>

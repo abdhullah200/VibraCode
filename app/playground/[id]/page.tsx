@@ -8,23 +8,22 @@ import { useAISuggestions } from '@/features/ai/hooks/useAISuggestions';
 import {PlaygroundEditor} from '@/features/playground/components/playground-editor';
 import TemplateFileTree from '@/features/playground/components/template-file-tree';
 import ToggleAI from '@/features/playground/components/toggle-ai';
+import ThemeSelector from '@/features/playground/components/theme-selector';
 import { useFileExplorer } from '@/features/playground/hooks/useFileExplorer';
 import { usePlayground } from '@/features/playground/hooks/usePlayground';
 import { findFilePath } from '@/features/playground/lib';
 import { TemplateFile } from '@/features/playground/lib/path-to-json';
 import { TemplateFolder } from '@/features/playground/types';
+import { getFileIcon } from '@/features/playground/lib/file-icons';
 import WebContainerPreview from '@/features/WebContainers/components/WebContainer-preview';
 import { useWebContainer } from '@/features/WebContainers/hooks/useWebContainer';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { Separator } from '@radix-ui/react-separator';
 import { Tabs, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
 import { TooltipContent, TooltipTrigger } from '@radix-ui/react-tooltip';
-import { se } from 'date-fns/locale';
-import { write } from 'fs';
-import { AlertCircle, Bot, Divide, File, FileText, FolderOpen, Save, Settings, Sidebar, X } from 'lucide-react';
-import { editor } from 'monaco-editor';
+import { AlertCircle, FileText, FolderOpen, Save, Settings, X } from 'lucide-react';
 import { useParams } from 'next/navigation';
-import React, { act, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { parentPort } from 'worker_threads';
 import { file } from 'zod';
@@ -32,6 +31,7 @@ import { file } from 'zod';
 const Page = ()=>{
     const {id} =useParams<{id:string}>();
     const [isPreviewVisible, setIsPreviewVisible] = useState(true);
+    const [editorTheme, setEditorTheme] = useState('modern-dark');
 
     const aiSuggestion = useAISuggestions();
 
@@ -65,8 +65,8 @@ const Page = ()=>{
     error: containerError,
     instance,
     writeFileSync,
-    // @ts-ignore
-  } = useWebContainer({ templateData });
+    
+  } = useWebContainer({ templateData: templateData as TemplateFolder });
 
   const lastSyncedContent = useRef<Map<string, string>>(new Map());
 
@@ -343,6 +343,7 @@ const Page = ()=>{
           onDeleteFolder={wrappedHandleDeleteFolder}
           onRenameFile={wrappedHandleRenameFile}
           onRenameFolder={wrappedHandleRenameFolder}
+          theme={editorTheme}
         />
 
         <SidebarInset>
@@ -396,6 +397,11 @@ const Page = ()=>{
                   suggestionLoading={aiSuggestion.isLoading}
                   />
 
+                <ThemeSelector 
+                  onThemeChange={setEditorTheme}
+                  currentTheme={editorTheme}
+                />
+
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button size="sm" variant="outline">
@@ -436,7 +442,9 @@ const Page = ()=>{
                             className="relative h-8 px-3 data-[state=active]:bg-background data-[state=active]:shadow-sm group"
                           >
                             <div className="flex items-center gap-2">
-                              <FileText className="h-3 w-3" />
+                              <span className="shrink-0">
+                                {getFileIcon(file.fileExtension)}
+                              </span>
                               <span>
                                 {file.filename}.{file.fileExtension}
                               </span>
@@ -496,6 +504,7 @@ const Page = ()=>{
                         onTriggerSuggestion={(type, editor) =>
                           aiSuggestion.fetchSuggestion(type, editor)
                         }
+                        theme={editorTheme}
                       />
 
                     </ResizablePanel>

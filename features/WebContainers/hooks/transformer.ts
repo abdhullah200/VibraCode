@@ -1,10 +1,15 @@
-interface TemplateItem {
+interface TemplateFile {
   filename: string;
   fileExtension: string;
   content: string;
-  folderName?: string;
-  items?: TemplateItem[];
 }
+
+interface TemplateFolder {
+  folderName: string;
+  items: (TemplateFile | TemplateFolder)[];
+}
+
+type TemplateItem = TemplateFile | TemplateFolder;
 
 interface WebContainerFile {
   file: {
@@ -20,16 +25,29 @@ interface WebContainerDirectory {
 
 type WebContainerFileSystem = Record<string, WebContainerFile | WebContainerDirectory>;
 
-export function transformToWebContainerFormat(template: { folderName: string; items: TemplateItem[] }): WebContainerFileSystem {
+function isTemplateFolder(item: TemplateItem): item is TemplateFolder {
+  return 'folderName' in item && 'items' in item;
+}
+
+function isTemplateFile(item: TemplateItem): item is TemplateFile {
+  return 'filename' in item && 'fileExtension' in item && 'content' in item;
+}
+
+export function transformToWebContainerFormat(template: TemplateFolder): WebContainerFileSystem {
   function processItem(item: TemplateItem): WebContainerFile | WebContainerDirectory {
-    if (item.folderName && item.items) {
+    if (isTemplateFolder(item)) {
       // This is a directory
       const directoryContents: WebContainerFileSystem = {};
       
       item.items.forEach(subItem => {
-        const key = subItem.fileExtension 
-          ? `${subItem.filename}.${subItem.fileExtension}`
-          : subItem.folderName!;
+        let key: string;
+        if (isTemplateFile(subItem)) {
+          key = subItem.fileExtension 
+            ? `${subItem.filename}.${subItem.fileExtension}`
+            : subItem.filename;
+        } else {
+          key = subItem.folderName;
+        }
         directoryContents[key] = processItem(subItem);
       });
 
@@ -62,9 +80,14 @@ export function transformToWebContainerFormat(template: { folderName: string; it
   const result: WebContainerFileSystem = {};
   
   template.items.forEach(item => {
-    const key = item.fileExtension 
-      ? `${item.filename}.${item.fileExtension}`
-      : item.folderName!;
+    let key: string;
+    if (isTemplateFile(item)) {
+      key = item.fileExtension 
+        ? `${item.filename}.${item.fileExtension}`
+        : item.filename;
+    } else {
+      key = item.folderName;
+    }
     result[key] = processItem(item);
   });
 

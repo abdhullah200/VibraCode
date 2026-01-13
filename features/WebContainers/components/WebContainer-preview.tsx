@@ -133,7 +133,7 @@ const WebContainerPreview: React.FC<WebContainerPreviewProps> = ({
           }
         }
 
-        // @ts-ignore
+        
         const files = transformToWebContainerFormat(templateData);
 
         setLoadingState((prev) => ({
