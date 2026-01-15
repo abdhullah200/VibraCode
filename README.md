@@ -1,260 +1,355 @@
-<div align="center">
-
-# 🚀 Xynraco Editor
-
-**A modern, web-based IDE built for the next generation of developers.**  
-Built with **Next.js**, powered by **WebContainers**, and enhanced by **AI-assisted coding** through **Ollama** — all running *directly in your browser*.
-
----
-
-<img width="200" height="200" alt="ChatGPT Image Nov 2, 2025, 03_47_51 PM" src="https://github.com/user-attachments/assets/4e7791f7-8971-4add-baa0-8975ffae0ea3" />
-
-
-</div>
-
-## ✨ Features
-
-| Feature | Status | Description |
-|----------|--------|--------------|
-| ⚡ **Real-time Execution** |  ✅ Implemented | Run code directly in your browser with WebContainers — no setup required. |
-| 🧠 **AI Assistance** |  ✅ Implemented | Get intelligent code completions and explanations via Ollama. |
-| 🧩 **Multi-Stack Templates** | ✅ Implemented | 30+ starter templates for frontend, backend, and fullstack projects. |
-| 💻 **Integrated Terminal** |  ✅ Implemented | Fully functional xterm terminal integration. |
-| 🎨 **Developer-First UI** | ✅ Implemented | Modern, responsive interface optimized for productivity. |
-| 🔐 **Authentication** | ✅ Implemented | Secure authentication with NextAuth.js and Prisma adapter. |
-| 📊 **Dashboard** | ✅ Implemented | User dashboard with project management. |
-
----
-
-## 🧱 Development Progress
-
-> **Current Phase:** `12 / 14`  
-> 🚧 *Actively in development — Early Access Coming Soon!*
-
-### What's Completed ✅
-- Core UI components & design system (shadcn/ui)
-- Dashboard and authentication system
-- Home page and navigation
-- Playground editor foundation
-- 30+ project templates (Angular, React, Vue, Next.js, etc.)
-
-### What's Coming 🚀
-- Editor + WebContainer runtime integration
-- AI code assistance (Ollama integration)
-- Advanced terminal features
-- Project persistence & cloud sync
-- Performance optimizations
-
----
-
-## 🖼️ UI Previews
+# Xynraco
 
 <div align="center">
 
-### 🏠 Home Page
-<img width="1355" height="596" alt="Home Page" src="https://github.com/user-attachments/assets/bf851acf-0918-44b2-ab53-b741a6464009" />
+![Next.js](https://img.shields.io/badge/Next.js-15.5.9-black?logo=next.js)
+![React](https://img.shields.io/badge/React-19-blue?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green?logo=mongodb)
+![Prisma](https://img.shields.io/badge/Prisma-6.19.1-2D3748?logo=prisma)
 
-### 📊 Dashboard
-<img width="1341" height="603" alt="Dashboard" src="https://github.com/user-attachments/assets/92fef304-d60a-42d7-987f-cbaf222dd416" />
+A modern web-based code playground and collaboration platform with AI-powered code suggestions, real-time editing, and seamless GitHub integration.
 
-### 🎮 Playground Editor
-Feature-rich code editor with Monaco, file system, and integrated terminal.
+[Documentation](SETUP.md) • [Demo](#) • [Report Bug](https://github.com/abdhullah200/Xynraco/issues)
 
 </div>
 
 ---
 
-## 🏗️ Project Structure
+## 🎯 About Xynraco
 
+**Xynraco** is a browser-based IDE and code playground that lets developers write, test, and execute code without leaving their browser. It combines the power of modern web technologies with local AI capabilities to provide an intelligent development environment.
+
+Whether you're prototyping a React component, building a Node.js API, or learning a new framework, Xynraco provides instant access to 30+ project templates, AI-assisted coding, and real-time execution—all locally on your machine.
+
+---
+
+## ✨ Core Features
+
+### 🎨 Interactive Code Playground
+- Launch projects with 30+ pre-configured templates (React, Next.js, Vue, Angular, Express, Hono, Flask, Django, and more)
+- Full-featured Monaco Editor (VS Code engine) with syntax highlighting, autocomplete, and debugging
+- Built-in file explorer and project structure management
+- Real-time code execution in your browser with WebContainers
+
+### 🤖 AI-Powered Code Assistance
+- Local AI integration with Ollama—no external API calls or subscriptions
+- CodeLlama and LLaMA 3 models for intelligent code suggestions and completions
+- Fast, private AI responses running entirely on your machine
+- AI chat for code explanations and debugging
+
+### 🔐 Secure Authentication
+- Multi-provider OAuth support (GitHub and Google)
+- Session management via NextAuth.js
+- User profile management and settings dashboard
+- Seamless GitHub account linking and repository access
+
+### 🔗 GitHub Integration
+- Import repositories directly into Xynraco
+- Sync code with GitHub repositories
+- GitHub authentication for quick login
+- Repository browser and project management
+
+### 📁 Project Persistence
+- All projects saved to MongoDB Atlas cloud database
+- Organize playgrounds by name and category
+- Star/bookmark favorite projects
+- Restore previous project versions
+- Cross-device access to all your projects
+
+### 📱 Responsive & Mobile-Ready
+- Works on desktop, tablet, and mobile devices
+- Mobile-optimized sidebar navigation
+- Touch-friendly interface
+- Access your playgrounds anywhere
+
+### 🎯 Real-Time Collaboration
+- Shareable project links
+- Live code editing
+- Multi-user workspace support
+
+---
+
+## 🏗️ How It Works
+
+### Architecture Overview
+Xynraco combines modern frontend and backend technologies:
+
+1. **Frontend** - Next.js 15 with React 19 provides a blazingly fast, responsive UI
+2. **Editor** - Monaco Editor powers a professional code editing experience
+3. **Runtime** - WebContainers execute code directly in the browser (Node.js environment)
+4. **Terminal** - Integrated xterm.js terminal for command-line access
+5. **Database** - MongoDB Atlas stores projects, user profiles, and preferences
+6. **Authentication** - NextAuth.js manages secure OAuth with GitHub and Google
+7. **AI** - Local Ollama instance provides intelligent code suggestions without sending code to servers
+
+### Project Structure
 ```
-├── app/                          # Next.js app directory
-│   ├── (auth)/                   # Authentication routes
-│   ├── (root)/                   # Main application layout
-│   ├── api/                      # API routes
-│   ├── dashboard/                # Dashboard pages
-│   └── playground/               # Playground editor
-├── components/
-│   ├── modal/                    # Modal components
-│   ├── providers/                # Context providers (Session, Theme)
-│   └── ui/                       # shadcn/ui component library
-├── features/                     # Feature modules
-│   ├── ai/                       # AI integration
-│   ├── auth/                     # Authentication logic
-│   ├── dashboard/                # Dashboard features
-│   ├── home/                     # Home page features
-│   ├── playground/               # Editor playground features
-│   └── WebContainers/            # WebContainer runtime
-├── hooks/                        # Custom React hooks
-├── lib/                          # Utility functions & database
-├── prisma/                       # Database schema & migrations
-└── public/vibracode-starters/    # 30+ project templates
+Xynraco/
+├── app/                    # Next.js App Router with API routes
+│   ├── (auth)/            # Authentication & login pages
+│   ├── (root)/            # Public pages & dashboard
+│   ├── api/               # Backend API endpoints
+│   ├── dashboard/         # User dashboard & project management
+│   ├── playground/        # Code editor & execution
+│   └── settings/          # User settings & profile
+├── components/            # Reusable UI components
+│   ├── ui/               # shadcn/ui component library
+│   ├── modal/            # Dialog & modal components
+│   └── providers/        # Context providers (Auth, Theme)
+├── features/             # Feature modules
+│   ├── playground/       # Editor & execution logic
+│   ├── dashboard/        # Project management
+│   ├── ai/              # AI integration
+│   ├── auth/            # Authentication flows
+│   └── WebContainers/   # Runtime container logic
+├── lib/                 # Utilities & database helpers
+├── prisma/             # Database schema & models
+└── public/             # Static assets & 30+ templates
 ```
 
 ---
 
-## ⚙️ Tech Stack
-
-### Frontend & Framework
-- **Next.js 15** - Full-stack React framework with Turbopack
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Tailwind CSS 4** - Utility-first styling
-
-### Editor & Runtime
-- **Monaco Editor** - Powerful code editor
-- **WebContainers** - Browser-based Node.js runtime
-- **xterm.js** - Terminal emulation
-
-### Backend & Database
-- **Prisma 6** - Database ORM
-- **MongoDB** - NoSQL database
-- **NextAuth.js 5** - Authentication & session management
-
-### UI & Components
-- **shadcn/ui** - Headless UI components
-- **Radix UI** - Accessible component primitives
-- **Lucide React** - Icon library
-- **Sonner** - Toast notifications
-- **Embla Carousel** - Carousel component
-
-### State Management & Forms
-- **Zustand** - Lightweight state management
-- **React Hook Form** - Efficient form handling
-- **Zod** - TypeScript-first schema validation
-
-### Additional Libraries
-- **Three.js** & **React Three Fiber** - 3D graphics support
-- **Recharts** - Data visualization
-- **date-fns** - Date utilities
-- **Vaul** - Sheet/drawer component
-
----
-
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ and npm/yarn
-- MongoDB instance running locally or cloud
-- (Optional) Ollama for local AI integration
 
-### Installation
+- **Node.js** 18.17.0 or higher ([Download](https://nodejs.org/))
+- **MongoDB Atlas** account (free tier available at https://www.mongodb.com/cloud/atlas)
+- **Ollama** installed locally for AI features (https://ollama.com/)
+- **Git** for cloning the repository
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/xynraco.git
-   cd xynraco
-   ```
+### Installation Steps
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+```bash
+# 1. Clone the repository
+git clone https://github.com/abdhullah200/Xynraco.git
+cd Xynraco
 
-3. **Set up environment variables**
-   Create a `.env.local` file:
-   ```env
-   NEXTAUTH_URL=http://localhost:3000
-   NEXTAUTH_SECRET=your-secret-key-here
-   DATABASE_URL=mongodb://localhost:27017/xynraco
-   OLLAMA_API_URL=http://localhost:11434
-   ```
+# 2. Install all dependencies
+npm install
 
-4. **Set up Prisma**
-   ```bash
-   npx prisma generate
-   npx prisma db push
-   ```
+# 3. Create .env file with required credentials
+# (See Configuration section below)
 
-5. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-   
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
+# 4. Start the development server
+npm run dev
+```
+
+Visit **http://localhost:3000** in your browser and start creating!
+
+### What Happens When You Run `npm run dev`?
+
+1. Turbopack bundles your code with blazing speed
+2. Next.js App Router starts on port 3000
+3. MongoDB connection initializes (requires DATABASE_URL in .env)
+4. NextAuth session management becomes active
+5. Ollama AI becomes available (if running locally)
+6. Hot reload enabled—changes instantly reflect in browser
 
 ---
 
-## 📝 Available Scripts
+## 📦 Tech Stack Explained
 
-- `npm run dev` - Start development server with Turbopack
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint checks
+### Frontend Layer
+| Technology | Purpose | Version |
+|-----------|---------|---------|
+| **Next.js 15** | Full-stack React framework with App Router, API routes, and Turbopack bundler | 15.5.9 |
+| **React 19** | Modern UI library with automatic batching and improved Server Components | 19.x |
+| **TypeScript 5** | Type safety for all JavaScript code | 5.x |
+| **TailwindCSS 3** | Utility-first CSS framework for rapid styling | 3.x |
+| **shadcn/ui** | Pre-built, accessible component library (buttons, dialogs, forms, etc.) | Latest |
+| **Lucide React** | Beautiful, consistent icon library with 400+ icons | Latest |
 
----
+### Editor & Runtime
+| Technology | Purpose | Version |
+|-----------|---------|---------|
+| **Monaco Editor** | VS Code's editor engine—syntax highlighting, autocomplete, debugging | Latest |
+| **WebContainers** | Browser-based Node.js runtime—run real code without a server | Latest |
+| **xterm.js** | Terminal emulation for integrated CLI access | Latest |
 
-## 🌍 Vision
+### Backend & Database
+| Technology | Purpose | Version |
+|-----------|---------|---------|
+| **NextAuth.js 5** | Enterprise authentication with OAuth, session management, and CSRF protection | 5.x |
+| **Prisma 6** | Type-safe ORM for database operations with migrations | 6.19.1 |
+| **MongoDB Atlas** | Scalable NoSQL cloud database—free tier available | Latest |
 
-> To redefine the way developers build, test, and iterate — all from within the browser.
+### AI & Intelligence
+| Technology | Purpose | Version |
+|-----------|---------|---------|
+| **Ollama** | Local AI model runner—CodeLlama, LLaMA 3, and more | Latest |
+| **CodeLlama** | Specialized LLM for code generation and completion | 7b/13b/34b |
+| **LLaMA 3** | General-purpose large language model for chat and explanations | 8b/70b |
 
-The **Xynraco Editor** isn't just an IDE. It's a complete developer workspace that's:
-- **Local** - Everything runs on your machine with no external dependencies
-- **Intelligent** - AI-powered code assistance right where you need it
-- **Fast** - Optimized performance with modern tooling
-- **Open** - Extensible with a plugin system
-
----
-
-## 🧭 Roadmap
-
-- [x] **Phase 1–2** – Project Setup & Core UI  
-- [x] **Phase 3–4** – Editor & WebContainer Integration (Current)  
-- [x] **Phase 5–6** – AI Integration & Terminal Refinement  
-- [ ] **Phase 7–8** – Templates, Persistence & Plugin System  
-- [ ] **Phase 9–14** – Cloud Sync, Collaboration & UX Polish  
-
----
-
-## 📦 Key Features in Detail
-
-### Authentication
-- Secure NextAuth.js integration
-- Prisma database adapter
-- Session management
-- OAuth ready
-
-### Dashboard
-- Project management interface
-- User profile management
-- Activity tracking
-
-### Playground Editor
-- Full-featured Monaco editor
-- File tree navigation
-- Integrated terminal (xterm)
-- Real-time code execution
-- Template library access
-
-### Templates
-Over 30 starter templates available:
-- **Frontend:** React, Vue, Angular, Svelte, Astro
-- **Backend:** Node, Express, Koa, Hono, Egg
-- **Fullstack:** Next.js, Nuxt, SvelteKit, Vite
-- **Frameworks:** GSAP, Three.js, Remotion, Slidev
-- **And many more...**
+### DevOps & Tooling
+| Technology | Purpose | Version |
+|-----------|---------|---------|
+| **Turbopack** | Lightning-fast incremental bundler (40x faster than Webpack) | Latest |
+| **ESLint 8** | Code quality and consistency checks | 8.x |
+| **PostCSS 8** | CSS processing with Tailwind and autoprefixer | 8.x |
 
 ---
 
-## 🤝 Contributing
+## ⚙️ Configuration
 
-We welcome contributions! Here's how you can help:
+### Environment Variables
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Create a `.env.local` file in the root directory with:
+
+```env
+# Database Connection
+DATABASE_URL="mongodb+srv://username:password@cluster.mongodb.net/dbname"
+
+# NextAuth Configuration
+AUTH_SECRET="your-32-character-random-secret"
+NEXTAUTH_URL="http://localhost:3000"
+AUTH_TRUST_HOST=true
+
+# GitHub OAuth (get from https://github.com/settings/developers)
+AUTH_GITHUB_ID="your-github-client-id"
+AUTH_GITHUB_SECRET="your-github-client-secret"
+
+# Google OAuth (get from https://console.cloud.google.com/)
+AUTH_GOOGLE_ID="your-google-client-id"
+AUTH_GOOGLE_SECRET="your-google-client-secret"
+```
+
+### Generating AUTH_SECRET
+```bash
+# Option 1: Using OpenSSL
+openssl rand -base64 32
+
+# Option 2: Using Node.js
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+
+# Option 3: Using npx
+npx auth secret
+```
+
+### Important Notes
+- **Never commit `.env.local`** to Git (already in .gitignore)
+- **Keep secrets private**—use GitHub Secrets for CI/CD deployments
+- **Exact URL match required** for OAuth callbacks
+
+**📖 For detailed setup of OAuth, MongoDB, and Ollama, see [SETUP.md](SETUP.md)**
 
 ---
 
-## 💜 Made with Love Abdhullah Ariff 
+## 📱 Mobile Testing
 
-**By [Abdullah Ariff](https://github.com/abdhullah200)**
+### Access From Your Phone
+Xynraco works great on mobile devices. Two options:
 
-If you find this project helpful, please consider supporting it with a ⭐ on GitHub!
+**Option 1: LAN (Local Network)**
+- Great for testing on your phone without internet
+- Works with GitHub OAuth
+- Fastest and most reliable
+- See [Mobile Testing Guide in SETUP.md](SETUP.md#mobile-testing)
+
+**Option 2: Public Tunnel (Cloudflare)**
+- Access from anywhere with internet
+- Required for Google OAuth
+- Public HTTPS URL
+- See [Mobile Testing Guide in SETUP.md](SETUP.md#mobile-testing)
 
 ---
 
-> 💬 *"Code, create, and collaborate — all in one place."*
+## �️ Available Scripts
+
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Start development server with Turbopack hot reload |
+| `npm run build` | Create optimized production build |
+| `npm start` | Run production server |
+| `npm run lint` | Check code quality with ESLint |
+| `npx prisma studio` | Open Prisma Studio—visual database manager |
+| `npx prisma db push` | Push schema changes to database |
+| `npx prisma generate` | Regenerate Prisma Client |
 
 ---
+
+## 🔑 Key Workflows
+
+### Creating Your First Playground
+
+1. Sign in with GitHub or Google OAuth
+2. Click **"New Playground"** on dashboard
+3. Select a template (React, Next.js, Vue, Express, etc.)
+4. Start editing code in Monaco Editor
+5. See live execution in the preview panel
+6. Save project to MongoDB
+
+### Importing a GitHub Repository
+
+1. Go to Dashboard
+2. Click **"Import Repository"**
+3. Select a public GitHub repo you have access to
+4. Code is instantly loaded and ready to edit
+5. Changes are synced with GitHub
+
+### Using AI Code Suggestions
+
+1. Ensure Ollama is running locally (`ollama serve`)
+2. In the playground, open AI Chat panel
+3. Ask for code suggestions, explanations, or debugging help
+4. AI responses appear directly in the editor
+5. All code stays local—nothing sent to external servers
+
+---
+
+## 📚 Documentation
+
+### Quick References
+- **[Complete Setup Guide](SETUP.md)** — OAuth (GitHub & Google), MongoDB Atlas, Ollama installation, environment variables
+- **[Mobile Testing Guide](SETUP.md#mobile-testing)** — LAN access for phones, public tunnel setup
+- **[Troubleshooting](SETUP.md#troubleshooting)** — Common issues and solutions
+- **[Architecture](SETUP.md#architecture)** — Project structure and data models
+
+---
+
+## 🐛 Known Issues & Workarounds
+
+| Issue | Status | Workaround |
+|-------|--------|-----------|
+| Playground runs `yarn` instead of `npm` | Pending fix | Manual yarn fix required |
+| ngrok free tier breaks OAuth cookies | Documentation | Use Cloudflare Tunnel instead |
+| Google OAuth rejects private IPs | By design | Use public HTTPS tunnel for testing |
+| Mobile sidebar not visible on small screens | ✅ **FIXED** | Now has toggle button |
+
+**📖 For detailed troubleshooting steps, see [SETUP.md](SETUP.md#troubleshooting)**
+
+---
+
+## 🎓 Learning Resources
+
+- **Next.js** - https://nextjs.org/docs
+- **React 19** - https://react.dev/
+- **TypeScript** - https://www.typescriptlang.org/docs/
+- **TailwindCSS** - https://tailwindcss.com/docs
+- **shadcn/ui** - https://ui.shadcn.com/
+- **Prisma ORM** - https://www.prisma.io/docs
+- **MongoDB** - https://www.mongodb.com/docs/
+- **Ollama** - https://ollama.com/docs
+- **NextAuth.js** - https://authjs.dev/
+
+---
+
+<div align="center">
+  
+### 💜 Made with Love and Code by Abdullah Ariff
+
+**If you found this project helpful, please consider giving it a ⭐ on GitHub!**
+
+[![GitHub Stars](https://img.shields.io/github/stars/abdhullah200/Xynraco?style=social)](https://github.com/abdhullah200/Xynraco)
+[![GitHub Forks](https://img.shields.io/github/forks/abdhullah200/Xynraco?style=social)](https://github.com/abdhullah200/Xynraco/fork)
+[![GitHub Issues](https://img.shields.io/github/issues/abdhullah200/Xynraco)](https://github.com/abdhullah200/Xynraco/issues)
+
+</div>
+
+
+---
+
+<div align="center">
+Made with ❤️ using Next.js, React, and Ollama
+</div>
