@@ -71,7 +71,7 @@ interface FileExplorerState {
   saveAllFiles: (saveTemplateData: (data: TemplateFolder) => Promise<void>) => Promise<void>;
 }
 
-//@ts-ignore
+
 export const useFileExplorer= create<FileExplorerState>((set, get) => ({
   templateData: null,
   playgroundId: '',
@@ -132,6 +132,15 @@ export const useFileExplorer= create<FileExplorerState>((set, get) => ({
             editorContent: newEditorContent
         });
     },
+
+    closeAllFiles: () => {
+        set({
+            openFiles: [],
+            activeFileId: null,
+            editorContent: ''
+        });
+    },
+
       handleAddFile: async (newFile, parentPath, writeFileSync, instance, saveTemplateData) => {
     const { templateData } = get();
     if (!templateData) return;

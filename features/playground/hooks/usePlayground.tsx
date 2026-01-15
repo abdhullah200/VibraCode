@@ -42,8 +42,8 @@ export const usePlayground = (id: string): UsePlaygroundReturn => {
       setError(null);
 
       const data = await getPlaygroundById(id);
-    //   @ts-ignore
-      setPlaygroundData(data);
+    
+      setPlaygroundData(data ? { ...data, id } : null);
 
       const rawContent = data?.templateFiles?.[0]?.content;
       
