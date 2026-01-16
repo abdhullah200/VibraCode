@@ -20,14 +20,14 @@ A modern web-based code playground and collaboration platform with AI-powered co
 
 **Xynraco** is a browser-based IDE and code playground that lets developers write, test, and execute code without leaving their browser. It combines the power of modern web technologies with local AI capabilities to provide an intelligent development environment.
 
-Whether you're prototyping a React component, building a Node.js API, or learning a new framework, Xynraco provides instant access to 30+ project templates, AI-assisted coding, and real-time execution—all locally on your machine.
+Whether you're prototyping a React component, building a Node.js API, or learning a new framework, Xynraco provides instant access to 6 project templates, AI-assisted coding, and real-time execution—all locally on your machine.
 
 ---
 
 ## ✨ Core Features
 
 ### 🎨 Interactive Code Playground
-- Launch projects with 30+ pre-configured templates (React, Next.js, Vue, Angular, Express, Hono, Flask, Django, and more)
+- Launch projects with 30+ pre-configured templates (React, NextJS , Express, Vue, Hono ,Angular)
 - Full-featured Monaco Editor (VS Code engine) with syntax highlighting, autocomplete, and debugging
 - Built-in file explorer and project structure management
 - Real-time code execution in your browser with WebContainers
@@ -105,7 +105,7 @@ Xynraco/
 │   └── WebContainers/   # Runtime container logic
 ├── lib/                 # Utilities & database helpers
 ├── prisma/             # Database schema & models
-└── public/             # Static assets & 30+ templates
+└── public/             # Static assets & 6 templates
 ```
 
 ---
