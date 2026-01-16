@@ -27,7 +27,7 @@ Whether you're prototyping a React component, building a Node.js API, or learnin
 ## ✨ Core Features
 
 ### 🎨 Interactive Code Playground
-- Launch projects with 30+ pre-configured templates (React, NextJS , Express, Vue, Hono ,Angular)
+- Launch projects with 6 pre-configured templates (React, NextJS , Express, Vue, Hono ,Angular)
 - Full-featured Monaco Editor (VS Code engine) with syntax highlighting, autocomplete, and debugging
 - Built-in file explorer and project structure management
 - Real-time code execution in your browser with WebContainers
