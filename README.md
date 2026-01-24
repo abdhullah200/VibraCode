@@ -348,7 +348,6 @@ Xynraco works great on mobile devices. Two options:
 </div>
 
 
----
 
 <div align="center">
 Made with ❤️ using Next.js, React, and Ollama
