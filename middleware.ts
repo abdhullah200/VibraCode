@@ -9,7 +9,31 @@ import {
     publicRoutes,
 } from "./routes";
 
+function getCanonicalHost() {
+    const rawUrl = process.env.NEXTAUTH_URL;
+    if (!rawUrl) return null;
+
+    try {
+        return new URL(rawUrl).host;
+    } catch {
+        return null;
+    }
+}
+
 export async function middleware(req: NextRequest) {
+    const canonicalHost = getCanonicalHost();
+
+    if (
+        canonicalHost &&
+        req.nextUrl.host !== canonicalHost &&
+        (req.nextUrl.pathname.startsWith(apiAuthPrefix) || authRoutes.includes(req.nextUrl.pathname))
+    ) {
+        const redirectUrl = req.nextUrl.clone();
+        redirectUrl.host = canonicalHost;
+        redirectUrl.protocol = "https:";
+        return NextResponse.redirect(redirectUrl);
+    }
+
     const token = await getToken({
         req,
         secret: process.env.AUTH_SECRET,
