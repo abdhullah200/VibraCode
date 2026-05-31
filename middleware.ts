@@ -5,6 +5,7 @@ import type { NextRequest } from "next/server";
 import {
     apiAuthPrefix,
     authRoutes,
+    debugRoutes,
     DEFAULT_LOGIN_REDIRECT,
     publicRoutes,
 } from "./routes";
@@ -75,6 +76,10 @@ export async function middleware(req: NextRequest) {
 
     const { nextUrl } = req;
     const isLoggedIn = Boolean(token);
+
+    if (debugRoutes.includes(nextUrl.pathname)) {
+        return NextResponse.next();
+    }
 
     if (nextUrl.pathname.startsWith(apiAuthPrefix)) {
         return NextResponse.next();
