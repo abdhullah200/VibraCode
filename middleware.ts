@@ -56,8 +56,10 @@ export async function middleware(req: NextRequest) {
                 [
                     "authjs.session-token",
                     "__Secure-authjs.session-token",
+                    "__Host-authjs.session-token",
                     "next-auth.session-token",
                     "__Secure-next-auth.session-token",
+                    "__Host-next-auth.session-token",
                 ].includes(name),
             ),
     });
