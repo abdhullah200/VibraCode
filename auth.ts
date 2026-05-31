@@ -14,9 +14,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     warn(message) {
       console.warn("[auth][warn]", message);
     },
-    debug(message) {
-      console.log("[auth][debug]", message);
-    },
   },
   callbacks: {
     async jwt({ token, user, account }) {

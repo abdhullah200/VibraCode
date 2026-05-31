@@ -38,50 +38,21 @@ export async function middleware(req: NextRequest) {
         const redirectUrl = req.nextUrl.clone();
         redirectUrl.host = canonicalHost;
         redirectUrl.protocol = "https:";
-        console.log("[middleware][host-redirect]", {
-            path: req.nextUrl.pathname,
-            from: req.nextUrl.host,
-            to: canonicalHost,
-        });
+        // host redirect for canonical NEXTAUTH_URL
         return NextResponse.redirect(redirectUrl);
     }
 
-    console.log("[middleware][cookie-state]", {
-        path: req.nextUrl.pathname,
-        host: req.nextUrl.host,
-        hasCookieHeader: Boolean(cookieHeader),
-        cookieNames,
-        hasSessionCookie:
-            cookieNames.some((name) =>
-                [
-                    "authjs.session-token",
-                    "__Secure-authjs.session-token",
-                    "__Host-authjs.session-token",
-                    "next-auth.session-token",
-                    "__Secure-next-auth.session-token",
-                    "__Host-next-auth.session-token",
-                ].includes(name),
-            ),
-    });
+    // cookie-state logged for debug during development
 
     const token = await getToken({
         req,
         secret: cleanEnv(process.env.AUTH_SECRET),
     });
 
-    console.log("[middleware][auth-state]", {
-        path: req.nextUrl.pathname,
-        host: req.nextUrl.host,
-        loggedIn: Boolean(token),
-        tokenSub: token?.sub ?? null,
-    });
+    // auth-state: token check performed; no verbose logging in production
 
     const { nextUrl } = req;
     const isLoggedIn = Boolean(token);
-
-    if (debugRoutes.includes(nextUrl.pathname)) {
-        return NextResponse.next();
-    }
 
     if (nextUrl.pathname.startsWith(apiAuthPrefix)) {
         return NextResponse.next();
