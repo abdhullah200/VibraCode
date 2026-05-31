@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import authConfig from "./auth.config";
 import { db } from "./lib/db";
+import { cleanEnv } from "./lib/env";
 import { getAccountByUserId, getUserById } from "@/features/auth/action";
 
 
@@ -43,7 +44,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
   },
   
-  secret: process.env.AUTH_SECRET,
+  secret: cleanEnv(process.env.AUTH_SECRET),
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
   ...authConfig,
