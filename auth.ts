@@ -6,11 +6,18 @@ import { db } from "./lib/db";
 import { cleanEnv } from "./lib/env";
 import { getAccountByUserId, getUserById } from "@/features/auth/action/queries";
 
-
- 
-
- 
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  logger: {
+    error(error) {
+      console.error("[auth][error]", error);
+    },
+    warn(message) {
+      console.warn("[auth][warn]", message);
+    },
+    debug(message) {
+      console.log("[auth][debug]", message);
+    },
+  },
   callbacks: {
     async jwt({ token, user, account }) {
       void user;
