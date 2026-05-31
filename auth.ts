@@ -4,7 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import authConfig from "./auth.config";
 import { db } from "./lib/db";
 import { cleanEnv } from "./lib/env";
-import { getAccountByUserId, getUserById } from "@/features/auth/action";
+import { getAccountByUserId, getUserById } from "@/features/auth/action/queries";
 
 
  
