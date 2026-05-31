@@ -10,14 +10,15 @@ import{
     CardTitle
 } from "@/components/ui/card";
 import { Chrome, Github } from "lucide-react";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 async function handleGoogleSignIn(){
   "use server";
-  await signIn("google");
+  await signIn("google", { redirectTo: DEFAULT_LOGIN_REDIRECT });
 }
 
 async function handleGithubSignIn(){
   "use server";
-  await signIn("github");
+  await signIn("github", { redirectTo: DEFAULT_LOGIN_REDIRECT });
 }
 export const SignInFormClient = () => {
   return (
