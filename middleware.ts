@@ -8,6 +8,7 @@ import {
     DEFAULT_LOGIN_REDIRECT,
     publicRoutes,
 } from "./routes";
+import { cleanEnv } from "./lib/env";
 
 function getCanonicalHost() {
     const rawUrl = process.env.NEXTAUTH_URL;
@@ -36,7 +37,7 @@ export async function middleware(req: NextRequest) {
 
     const token = await getToken({
         req,
-        secret: process.env.AUTH_SECRET,
+        secret: cleanEnv(process.env.AUTH_SECRET),
     });
 
     const { nextUrl } = req;
