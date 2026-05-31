@@ -32,12 +32,24 @@ export async function middleware(req: NextRequest) {
         const redirectUrl = req.nextUrl.clone();
         redirectUrl.host = canonicalHost;
         redirectUrl.protocol = "https:";
+        console.log("[middleware][host-redirect]", {
+            path: req.nextUrl.pathname,
+            from: req.nextUrl.host,
+            to: canonicalHost,
+        });
         return NextResponse.redirect(redirectUrl);
     }
 
     const token = await getToken({
         req,
         secret: cleanEnv(process.env.AUTH_SECRET),
+    });
+
+    console.log("[middleware][auth-state]", {
+        path: req.nextUrl.pathname,
+        host: req.nextUrl.host,
+        loggedIn: Boolean(token),
+        tokenSub: token?.sub ?? null,
     });
 
     const { nextUrl } = req;
