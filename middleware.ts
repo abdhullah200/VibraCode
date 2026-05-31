@@ -23,6 +23,7 @@ function getCanonicalHost() {
 
 export async function middleware(req: NextRequest) {
     const canonicalHost = getCanonicalHost();
+    const cookieHeader = req.headers.get("cookie") ?? "";
 
     if (
         canonicalHost &&
@@ -39,6 +40,13 @@ export async function middleware(req: NextRequest) {
         });
         return NextResponse.redirect(redirectUrl);
     }
+
+    console.log("[middleware][cookie-state]", {
+        path: req.nextUrl.pathname,
+        host: req.nextUrl.host,
+        hasCookieHeader: Boolean(cookieHeader),
+        hasAuthCookie: cookieHeader.includes("authjs") || cookieHeader.includes("next-auth"),
+    });
 
     const token = await getToken({
         req,
