@@ -22,24 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "global.d.ts",
-    "auth.ts",
-    "auth.config.ts",
-    "next-auth.ts",
-    "middleware.ts",
-    "routes.ts",
-    "prisma.config.ts",
-    "app/**/*.ts",
-    "app/**/*.tsx",
-    "components/**/*.ts",
-    "components/**/*.tsx",
-    "features/**/*.ts",
-    "features/**/*.tsx",
-    "hooks/**/*.ts",
-    "lib/**/*.ts",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": ["node_modules", "vibracode-starters", "output"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/playground/[id]/pa"],
+  "exclude": ["node_modules"]
 }
