@@ -75,7 +75,7 @@ export async function GET(request: Request) {
       },
     });
 
-    if (!account?.accessToken) {
+    if (!account?.access_token) {
       return NextResponse.json(
         { error: "GitHub account not connected" },
         { status: 400 }
@@ -103,7 +103,7 @@ export async function GET(request: Request) {
     const response = await fetch(url.toString(), {
       redirect: "error", // Prevent redirect-based SSRF
       headers: {
-        Authorization: `token ${account.accessToken}`,
+        Authorization: `Bearer ${account.access_token}`,
         Accept: "application/vnd.github.v3+json",
       },
     });

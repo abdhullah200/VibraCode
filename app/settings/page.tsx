@@ -105,7 +105,7 @@ export default async function SettingsPage() {
                 <div>
                   <p className="text-muted-foreground">GitHub</p>
                   <p className="font-medium">
-                    {githubAccount ? githubAccount.providerAccountId : "Not connected"}
+                      {githubAccount ? githubAccount.providerAccountId : "Not connected"}
                   </p>
                 </div>
               </div>

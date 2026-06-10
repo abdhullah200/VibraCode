@@ -21,7 +21,7 @@ export async function GET() {
       },
     });
 
-    if (!account || !account.accessToken) {
+    if (!account || !account.access_token) {
       return NextResponse.json(
         { error: "GitHub account not connected. Please sign in with GitHub." },
         { status: 400 }
@@ -31,7 +31,7 @@ export async function GET() {
     // Fetch repositories from GitHub API
     const response = await fetch("https://api.github.com/user/repos?per_page=100&sort=updated", {
       headers: {
-        Authorization: `token ${account.accessToken}`,
+        Authorization: `Bearer ${account.access_token}`,
         Accept: "application/vnd.github.v3+json",
       },
     });

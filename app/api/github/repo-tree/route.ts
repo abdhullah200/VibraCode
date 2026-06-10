@@ -138,7 +138,7 @@ export async function GET(request: Request) {
       },
     });
 
-    if (!account || !account.accessToken) {
+    if (!account || !account.access_token) {
       return NextResponse.json(
         { error: "GitHub account not connected" },
         { status: 400 }
@@ -150,7 +150,7 @@ export async function GET(request: Request) {
       repo.fullName,
       "",
       repo.defaultBranch,
-      account.accessToken
+      account.access_token
     );
 
     const templateData = {
