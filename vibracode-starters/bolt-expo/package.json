@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "EXPO_NO_TELEMETRY=1 expo start",
     "build:web": "expo export --platform web",
+    "postinstall": "prisma generate",
     "lint": "expo lint",
     "typecheck": "tsc --noEmit"
   },

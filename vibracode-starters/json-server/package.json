@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "frontend": "http-server",
-    "backend": "json-server -w db.json"
+    "backend": "json-server -w db.json",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "http-server": "^0.12.3"

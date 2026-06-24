@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "ng": "ng",
+    "postinstall": "prisma generate",
     "start": "ng serve",
     "build": "ng build"
   },

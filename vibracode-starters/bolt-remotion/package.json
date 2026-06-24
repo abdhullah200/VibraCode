@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "remotion studio",
     "build": "remotion render",
+    "postinstall": "prisma generate",
     "upgrade": "remotion upgrade",
     "test": "eslint src && tsc"
   },

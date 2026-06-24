@@ -8,7 +8,8 @@
     "build": "astro check && astro build",
     "dev": "astro dev",
     "preview": "astro preview",
-    "start": "astro dev"
+    "start": "astro dev",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@tutorialkit/components-react": "0.0.1-alpha.22",

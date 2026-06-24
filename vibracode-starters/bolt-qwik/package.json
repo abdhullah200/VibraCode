@@ -13,6 +13,7 @@
   "type": "module",
   "scripts": {
     "build": "qwik build",
+    "postinstall": "prisma generate",
     "build.client": "vite build",
     "build.preview": "vite build --ssr src/entry.preview.tsx",
     "build.server": "vite build -c adapters/static/vite.config.ts",

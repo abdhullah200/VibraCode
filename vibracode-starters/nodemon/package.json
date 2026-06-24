@@ -2,7 +2,8 @@
   "name": "nodemon-starter",
   "private": true,
   "scripts": {
-    "start": "node run.js"
+    "start": "node run.js",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "nodemon": "^2.0.22"

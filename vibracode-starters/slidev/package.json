@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "slidev",
     "build": "slidev build",
+    "postinstall": "prisma generate",
     "export": "slidev export"
   },
   "dependencies": {

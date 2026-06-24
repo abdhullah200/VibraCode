@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "servor --reload"
+    "start": "servor --reload",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "servor": "^4.0.2"

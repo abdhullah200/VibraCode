@@ -1,7 +1,8 @@
 {
   "name": "json-graphql-server-starter",
   "scripts": {
-    "start": "json-graphql-server db.js"
+    "start": "json-graphql-server db.js",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "json-graphql-server": "^2.2.3"
