@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  outputFileTracingIncludes: {
+    "/api/template/[id]": ["./vibracode-starters/**/*"],
+  },
   images: {
     remotePatterns: [
       {

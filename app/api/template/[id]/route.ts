@@ -40,7 +40,7 @@ export async function GET(request: NextRequest,
 
     try{
         const inputPath = path.join(process.cwd(), templatePath);
-        const outputFile = path.join(process.cwd(), `output/${templateKey}.json`);
+        const outputFile = path.join("/tmp", `${templateKey}.json`);
 
         await saveTemplateStructureToJson(inputPath, outputFile);
         const result = await readTemplateStructureFromJson(outputFile);
