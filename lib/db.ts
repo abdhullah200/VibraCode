@@ -3,7 +3,7 @@ import { normalizeMongoUrl } from "./env";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined };
 
-const databaseUrl = normalizeMongoUrl(process.env.DATABASE_URL);
+const databaseUrl = normalizeMongoUrl(process.env.DATABASE_URL) ?? "";
 
 export const db =
 	globalForPrisma.prisma ??
