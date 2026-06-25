@@ -1,7 +1,6 @@
 import { config as loadEnv } from "dotenv";
-import { defineConfig, env } from "prisma/config";
+import { defineConfig } from "prisma/config";
 
-// Ensure Prisma config runs with environment variables from .env when spawned by the CLI
 loadEnv();
 
 export default defineConfig({
@@ -11,6 +10,6 @@ export default defineConfig({
   },
   engine: "classic",
   datasource: {
-    url: env("DATABASE_URL"),
+    url: process.env.DATABASE_URL ?? "",
   },
 });
