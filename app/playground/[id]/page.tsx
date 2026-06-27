@@ -347,82 +347,86 @@ const Page = ()=>{
         />
 
         <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 h-4" />
+          <header className="flex h-auto min-h-[4rem] shrink-0 items-center gap-2 border-b px-2 py-2 flex-wrap">
+  <SidebarTrigger className="-ml-1" />
+  <Separator orientation="vertical" className="mr-2 h-4" />
 
-            <div className="flex flex-1 items-center gap-2">
-              <div className="flex flex-col flex-1">
-                <h1 className="text-sm font-medium">
-                  {playgroundData?.name || "Code Playground"}
-                </h1>
-                <p className="text-xs text-muted-foreground">
-                  {openFiles.length} file(s) open
-                  {hasUnsavedChanges && " • Unsaved changes"}
-                </p>
-              </div>
+  <div className="flex flex-1 items-center gap-1 flex-wrap min-w-0">
+    <div className="flex flex-col flex-1 min-w-0">
+      <h1 className="text-sm font-medium truncate">
+        {playgroundData?.name || "Code Playground"}
+      </h1>
+      <p className="text-xs text-muted-foreground truncate">
+        {openFiles.length} file(s) open
+        {hasUnsavedChanges && " • Unsaved changes"}
+      </p>
+    </div>
 
-              <div className="flex items-center gap-1">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleSave()}
-                      disabled={!activeFile || !activeFile.hasUnsavedChanges}
-                    >
-                      <Save className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Save (Ctrl+S)</TooltipContent>
-                </Tooltip>
+    <div className="flex items-center gap-1 flex-wrap">
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => handleSave()}
+            disabled={!activeFile || !activeFile.hasUnsavedChanges}
+            className="h-8 px-2"
+          >
+            <Save className="h-4 w-4" />
+            <span className="hidden sm:inline ml-1">Save</span>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Save (Ctrl+S)</TooltipContent>
+      </Tooltip>
 
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={handleSaveAll}
-                      disabled={!hasUnsavedChanges}
-                    >
-                      <Save className="h-4 w-4" /> All
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Save All (Ctrl+Shift+S)</TooltipContent>
-                </Tooltip>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={handleSaveAll}
+            disabled={!hasUnsavedChanges}
+            className="h-8 px-2"
+          >
+            <Save className="h-4 w-4" />
+            <span className="hidden sm:inline ml-1">All</span>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Save All</TooltipContent>
+      </Tooltip>
 
-                <ToggleAI
-                  isEnabled={aiSuggestion.isEnabled}
-                  onToggle={aiSuggestion.toggleEnabled}
-                  suggestionLoading={aiSuggestion.isLoading}
-                  />
+      <ToggleAI
+        isEnabled={aiSuggestion.isEnabled}
+        onToggle={aiSuggestion.toggleEnabled}
+        suggestionLoading={aiSuggestion.isLoading}
+      />
 
-                <ThemeSelector 
-                  onThemeChange={setEditorTheme}
-                  currentTheme={editorTheme}
-                />
+      <ThemeSelector
+        onThemeChange={setEditorTheme}
+        currentTheme={editorTheme}
+      />
 
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button size="sm" variant="outline">
-                      <Settings className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem
-                      onClick={() => setIsPreviewVisible(!isPreviewVisible)}
-                    >
-                      {isPreviewVisible ? "Hide" : "Show"} Preview
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={closeAllFiles}>
-                      Close All Files
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </div>
-          </header>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button size="sm" variant="outline" className="h-8 px-2">
+            <Settings className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem
+            onClick={() => setIsPreviewVisible(!isPreviewVisible)}
+          >
+            {isPreviewVisible ? "Hide" : "Show"} Preview
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={closeAllFiles}>
+            Close All Files
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  </div>
+</header>
 
           <div className="h-[calc(100vh-4rem)]">
             {openFiles.length > 0 ? (

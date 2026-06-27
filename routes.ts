@@ -1,4 +1,4 @@
-export const publicRoutes: string[] = [];
+export const publicRoutes: string[] = ["/docs", "/api-info"];
 
 export const protectedRoutes: string[] = ["/"];
 
