@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Code2, Compass, Database, FlameIcon, Lightbulb, Terminal, Zap } from "lucide-react"
+import { Compass, Database, FlameIcon, Lightbulb, Terminal, Zap } from "lucide-react"
 
 import { DocsPageHeader } from "@/features/docs/components/docs-page-header"
 import { DocsPager } from "@/features/docs/components/docs-pager"
