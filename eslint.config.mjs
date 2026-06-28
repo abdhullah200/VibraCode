@@ -18,16 +18,12 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "vibracode-starters/**",
     ],
   },
   {
-    files: ["app/docs/**/*.tsx", "features/docs/**/*.tsx"],
     rules: {
       "react/no-unescaped-entities": "off",
-    },
-  },
-  {
-    rules: {
       "@typescript-eslint/no-explicit-any": "warn",
     },
   },
