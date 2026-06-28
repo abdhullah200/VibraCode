@@ -5,7 +5,6 @@ import type { NextRequest } from "next/server";
 import {
     apiAuthPrefix,
     authRoutes,
-    debugRoutes,
     DEFAULT_LOGIN_REDIRECT,
     publicRoutes,
 } from "./routes";
