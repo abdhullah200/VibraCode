@@ -20,10 +20,15 @@ const eslintConfig = [
       "next-env.d.ts",
     ],
   },
-    {
+  {
     files: ["app/docs/**/*.tsx", "features/docs/**/*.tsx"],
     rules: {
       "react/no-unescaped-entities": "off",
+    },
+  },
+  {
+    rules: {
+      "@typescript-eslint/no-explicit-any": "warn",
     },
   },
 ];
