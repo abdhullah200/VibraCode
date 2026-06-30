@@ -53,7 +53,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { EnhancedCodeBlock } from "./ai-chat-code-blocks";
 import { EnhancedFilePreview } from "./file-preview";
-import "katex/dist/katex.min.css";
+
 
 interface FileAttachment {
   id: string;
@@ -1350,7 +1350,8 @@ export const AIChatSidePanel: React.FC<AIChatSidePanelProps> = ({
                   onChange={(e) => setInput(e.target.value)}
                   onPaste={handlePaste}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
                       handleSendMessage(e as any);
                     }
                   }}
