@@ -7,10 +7,11 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green?logo=mongodb)
 ![Prisma](https://img.shields.io/badge/Prisma-6.19.1-2D3748?logo=prisma)
+![CI](https://github.com/abdhullah200/Xynraco/actions/workflows/ci.yml/badge.svg)
 
 A modern web-based code playground and collaboration platform with AI-powered code suggestions, real-time editing, and seamless GitHub integration.
 
-[Documentation](SETUP.md) • [Demo](#) • [Report Bug](https://github.com/abdhullah200/Xynraco/issues)
+• [Demo](https://xynraco.vercel.app/) • [Report Bug](https://github.com/abdhullah200/Xynraco/issues)
 
 </div>
 
@@ -18,24 +19,24 @@ A modern web-based code playground and collaboration platform with AI-powered co
 
 ## 🎯 About Xynraco
 
-**Xynraco** is a browser-based IDE and code playground that lets developers write, test, and execute code without leaving their browser. It combines the power of modern web technologies with local AI capabilities to provide an intelligent development environment.
+**Xynraco** is a browser-based IDE and code playground that lets developers write, test, and execute code without leaving their browser. It combines the power of modern web technologies with cloud-hosted AI to provide an intelligent development environment.
 
-Whether you're prototyping a React component, building a Node.js API, or learning a new framework, Xynraco provides instant access to 6 project templates, AI-assisted coding, and real-time execution—all locally on your machine.
+Whether you're prototyping a React component, building a Node.js API, or learning a new framework, Xynraco provides instant access to 6 project templates, AI-assisted coding, and real-time execution—all in your browser.
 
 ---
 
 ## ✨ Core Features
 
 ### 🎨 Interactive Code Playground
-- Launch projects with 6 pre-configured templates (React, NextJS , Express, Vue, Hono ,Angular)
+- Launch projects with 6 pre-configured templates (React, NextJS, Express, Vue, Hono, Angular)
 - Full-featured Monaco Editor (VS Code engine) with syntax highlighting, autocomplete, and debugging
 - Built-in file explorer and project structure management
 - Real-time code execution in your browser with WebContainers
 
 ### 🤖 AI-Powered Code Assistance
-- Local AI integration with Ollama—no external API calls or subscriptions
-- CodeLlama and LLaMA 3 models for intelligent code suggestions and completions
-- Fast, private AI responses running entirely on your machine
+- Cloud AI integration via **NVIDIA Build's hosted API**—no local model setup required
+- Powered by `meta/llama-3.3-70b-instruct` for intelligent code suggestions and completions
+- Fast, scalable AI responses with no local hardware requirements
 - AI chat for code explanations and debugging
 
 ### 🔐 Secure Authentication
@@ -81,7 +82,7 @@ Xynraco combines modern frontend and backend technologies:
 4. **Terminal** - Integrated xterm.js terminal for command-line access
 5. **Database** - MongoDB Atlas stores projects, user profiles, and preferences
 6. **Authentication** - NextAuth.js manages secure OAuth with GitHub and Google
-7. **AI** - Local Ollama instance provides intelligent code suggestions without sending code to servers
+7. **AI** - NVIDIA Build's hosted API (`meta/llama-3.3-70b-instruct`) provides intelligent code suggestions
 
 ### Project Structure
 ```
@@ -100,11 +101,14 @@ Xynraco/
 ├── features/             # Feature modules
 │   ├── playground/       # Editor & execution logic
 │   ├── dashboard/        # Project management
-│   ├── ai/              # AI integration
+│   ├── ai/              # AI integration (NVIDIA Build)
 │   ├── auth/            # Authentication flows
 │   └── WebContainers/   # Runtime container logic
 ├── lib/                 # Utilities & database helpers
 ├── prisma/             # Database schema & models
+├── docs/               # User guide & documentation
+├── .github/
+│   └── workflows/      # CI/CD pipeline (GitHub Actions)
 └── public/             # Static assets & 6 templates
 ```
 
@@ -116,7 +120,7 @@ Xynraco/
 
 - **Node.js** 18.17.0 or higher ([Download](https://nodejs.org/))
 - **MongoDB Atlas** account (free tier available at https://www.mongodb.com/cloud/atlas)
-- **Ollama** installed locally for AI features (https://ollama.com/)
+- **NVIDIA Build API key** for AI features (https://build.nvidia.com/)
 - **Git** for cloning the repository
 
 ### Installation Steps
@@ -144,7 +148,7 @@ Visit **http://localhost:3000** in your browser and start creating!
 2. Next.js App Router starts on port 3000
 3. MongoDB connection initializes (requires DATABASE_URL in .env)
 4. NextAuth session management becomes active
-5. Ollama AI becomes available (if running locally)
+5. AI features become available via the NVIDIA Build API (requires API key in .env)
 6. Hot reload enabled—changes instantly reflect in browser
 
 ---
@@ -178,13 +182,13 @@ Visit **http://localhost:3000** in your browser and start creating!
 ### AI & Intelligence
 | Technology | Purpose | Version |
 |-----------|---------|---------|
-| **Ollama** | Local AI model runner—CodeLlama, LLaMA 3, and more | Latest |
-| **CodeLlama** | Specialized LLM for code generation and completion | 7b/13b/34b |
-| **LLaMA 3** | General-purpose large language model for chat and explanations | 8b/70b |
+| **NVIDIA Build API** | Hosted inference API for AI code suggestions—no local setup needed | Latest |
+| **Llama 3.3 70B Instruct** | `meta/llama-3.3-70b-instruct`—general-purpose LLM for code generation, explanations, and chat | 70B |
 
 ### DevOps & Tooling
 | Technology | Purpose | Version |
 |-----------|---------|---------|
+| **GitHub Actions** | CI/CD pipeline—lint, type-check, and build on every push/PR | Latest |
 | **Turbopack** | Lightning-fast incremental bundler (40x faster than Webpack) | Latest |
 | **ESLint 8** | Code quality and consistency checks | 8.x |
 | **PostCSS 8** | CSS processing with Tailwind and autoprefixer | 8.x |
@@ -213,6 +217,10 @@ AUTH_GITHUB_SECRET="your-github-client-secret"
 # Google OAuth (get from https://console.cloud.google.com/)
 AUTH_GOOGLE_ID="your-google-client-id"
 AUTH_GOOGLE_SECRET="your-google-client-secret"
+
+# NVIDIA Build API (AI features - get from https://build.nvidia.com/)
+NVIDIA_API_KEY="your-nvidia-build-api-key"
+NVIDIA_MODEL="meta/llama-3.3-70b-instruct"
 ```
 
 ### Generating AUTH_SECRET
@@ -229,10 +237,10 @@ npx auth secret
 
 ### Important Notes
 - **Never commit `.env.local`** to Git (already in .gitignore)
-- **Keep secrets private**—use GitHub Secrets for CI/CD deployments
+- **Keep secrets private**—use GitHub Secrets for CI/CD deployments and Vercel Environment Variables for production/preview
 - **Exact URL match required** for OAuth callbacks
+- **Set environment variables per-environment on Vercel** (Production/Preview/Development) to avoid preview deployments picking up production values
 
-**📖 For detailed setup of OAuth, MongoDB, and Ollama, see [SETUP.md](SETUP.md)**
 
 ---
 
@@ -245,17 +253,15 @@ Xynraco works great on mobile devices. Two options:
 - Great for testing on your phone without internet
 - Works with GitHub OAuth
 - Fastest and most reliable
-- See [Mobile Testing Guide in SETUP.md](SETUP.md#mobile-testing)
 
 **Option 2: Public Tunnel (Cloudflare)**
 - Access from anywhere with internet
 - Required for Google OAuth
 - Public HTTPS URL
-- See [Mobile Testing Guide in SETUP.md](SETUP.md#mobile-testing)
 
 ---
 
-## �️ Available Scripts
+## 🛠️ Available Scripts
 
 | Command | Purpose |
 |---------|---------|
@@ -290,21 +296,35 @@ Xynraco works great on mobile devices. Two options:
 
 ### Using AI Code Suggestions
 
-1. Ensure Ollama is running locally (`ollama serve`)
+1. Ensure `NVIDIA_API_KEY` is set in your environment
 2. In the playground, open AI Chat panel
 3. Ask for code suggestions, explanations, or debugging help
-4. AI responses appear directly in the editor
-5. All code stays local—nothing sent to external servers
+4. AI responses appear directly in the editor, powered by `meta/llama-3.3-70b-instruct`
+
+---
+
+## 🔄 CI/CD
+
+Xynraco uses **GitHub Actions** for continuous integration. On every push and pull request, the pipeline:
+
+- Installs dependencies
+- Runs ESLint checks
+- Runs TypeScript type-checking
+- Builds the production bundle
+
+Deployments are handled via **Vercel**, with separate Production and Preview (per-branch) environments. Each environment has its own set of environment variables to avoid preview deployments inheriting production configuration.
 
 ---
 
 ## 📚 Documentation
 
-### Quick References
-- **[Complete Setup Guide](SETUP.md)** — OAuth (GitHub & Google), MongoDB Atlas, Ollama installation, environment variables
-- **[Mobile Testing Guide](SETUP.md#mobile-testing)** — LAN access for phones, public tunnel setup
-- **[Troubleshooting](SETUP.md#troubleshooting)** — Common issues and solutions
-- **[Architecture](SETUP.md#architecture)** — Project structure and data models
+Full documentation lives in the [`docs/`](https://xynraco.vercel.app/docs) folder, including:
+
+- **Setup Guide** — OAuth (GitHub & Google), MongoDB Atlas, and NVIDIA Build API configuration
+- **Mobile Testing Guide** — LAN access for phones, public tunnel setup
+- **Troubleshooting** — Common issues and solutions
+- **Architecture** — Project structure and data models
+- **Deployment** — Vercel setup, environment variables, and CI/CD
 
 ---
 
@@ -316,8 +336,7 @@ Xynraco works great on mobile devices. Two options:
 | ngrok free tier breaks OAuth cookies | Documentation | Use Cloudflare Tunnel instead |
 | Google OAuth rejects private IPs | By design | Use public HTTPS tunnel for testing |
 | Mobile sidebar not visible on small screens | ✅ **FIXED** | Now has toggle button |
-
-**📖 For detailed troubleshooting steps, see [SETUP.md](SETUP.md#troubleshooting)**
+| AI backend migrated from local Ollama to NVIDIA Build | ✅ **DONE** | Requires `NVIDIA_API_KEY`; local Ollama no longer needed |
 
 ---
 
@@ -330,7 +349,7 @@ Xynraco works great on mobile devices. Two options:
 - **shadcn/ui** - https://ui.shadcn.com/
 - **Prisma ORM** - https://www.prisma.io/docs
 - **MongoDB** - https://www.mongodb.com/docs/
-- **Ollama** - https://ollama.com/docs
+- **NVIDIA Build** - https://build.nvidia.com/
 - **NextAuth.js** - https://authjs.dev/
 
 ---
@@ -347,8 +366,6 @@ Xynraco works great on mobile devices. Two options:
 
 </div>
 
-
-
 <div align="center">
-Made with ❤️ using Next.js, React, and Ollama
+Made with ❤️ using Next.js, React, and NVIDIA Build
 </div>
