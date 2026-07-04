@@ -1,5 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 
+export const maxDuration = 60
+
 interface ChatMessage {
   role: "user" | "assistant"
   content: string
