@@ -39,7 +39,7 @@ Keep responses concise but comprehensive. Use code blocks with language specific
         Connection: "close",
       },
       body: JSON.stringify({
-        model: "meta/llama-3.3-70b-instruct",
+        model: "meta/llama-3.1-8b-instruct",
         messages: fullMessages,
         temperature: 0.7,
         top_p: 0.9,
@@ -96,7 +96,7 @@ Return only the enhanced prompt, nothing else.`
         Connection: "close",
       },
       body: JSON.stringify({
-        model: "meta/llama-3.3-70b-instruct",
+        model: "meta/llama-3.1-8b-instruct",
         messages: [{ role: "user", content: enhancementPrompt }],
         temperature: 0.3,
         max_tokens: 500,
