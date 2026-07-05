@@ -1,5 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 
+export const maxDuration = 60
+
 interface ChatMessage {
   role: "user" | "assistant"
   content: string
@@ -21,35 +23,28 @@ async function generateAIResponse(messages: ChatMessage[]) {
 - Writing clean, efficient code
 - Troubleshooting errors
 - Code reviews and optimizations
-
 Always provide clear, practical answers. When showing code, use proper formatting with language-specific syntax.
 Keep responses concise but comprehensive. Use code blocks with language specification when providing code examples.`
 
   const fullMessages = [{ role: "system", content: systemPrompt }, ...messages]
 
-  const prompt = fullMessages.map((msg) => `${msg.role}: ${msg.content}`).join("\n\n")
-
   const controller = new AbortController()
-  const timeoutId = setTimeout(() => controller.abort(), 15000)
-
+  const timeoutId = setTimeout(() => controller.abort(), 30000)
   try {
-    const response = await fetch("http://localhost:11434/api/generate", {
+    const response = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NVIDIA_API_KEY}`,
+        Connection: "close",
       },
       body: JSON.stringify({
-        model: "codellama:latest",
-        prompt,
+        model: "meta/llama-3.1-8b-instruct",
+        messages: fullMessages,
+        temperature: 0.7,
+        top_p: 0.9,
+        max_tokens: 1000,
         stream: false,
-        options: {
-          temperature: 0.7,
-          top_p: 0.9,
-          max_tokens: 1000,
-          num_predict: 1000,
-          repeat_penalty: 1.1,
-          context_length: 4096,
-        },
       }),
       signal: controller.signal,
     })
@@ -63,10 +58,13 @@ Keep responses concise but comprehensive. Use code blocks with language specific
     }
 
     const data = await response.json()
-    if (!data.response) {
+    const content = data.choices?.[0]?.message?.content
+
+    if (!content) {
       throw new Error("No response from AI model")
     }
-    return data.response.trim()
+
+    return content.trim()
   } catch (error) {
     clearTimeout(timeoutId)
     if ((error as Error).name === "AbortError") {
@@ -79,34 +77,30 @@ Keep responses concise but comprehensive. Use code blocks with language specific
 
 async function enhancePrompt(request: EnhancePromptRequest) {
   const enhancementPrompt = `You are a prompt enhancement assistant. Take the user's basic prompt and enhance it to be more specific, detailed, and effective for a coding AI assistant.
-
 Original prompt: "${request.prompt}"
-
 Context: ${request.context ? JSON.stringify(request.context, null, 2) : "No additional context"}
-
 Enhanced prompt should:
 - Be more specific and detailed
 - Include relevant technical context
 - Ask for specific examples or explanations
 - Be clear about expected output format
 - Maintain the original intent
-
 Return only the enhanced prompt, nothing else.`
 
   try {
-    const response = await fetch("http://localhost:11434/api/generate", {
+    const response = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NVIDIA_API_KEY}`,
+        Connection: "close",
       },
       body: JSON.stringify({
-        model: "codellama:latest",
-        prompt: enhancementPrompt,
+        model: "meta/llama-3.1-8b-instruct",
+        messages: [{ role: "user", content: enhancementPrompt }],
+        temperature: 0.3,
+        max_tokens: 500,
         stream: false,
-        options: {
-          temperature: 0.3,
-          max_tokens: 500,
-        },
       }),
     })
 
@@ -115,10 +109,10 @@ Return only the enhanced prompt, nothing else.`
     }
 
     const data = await response.json()
-    return data.response?.trim() || request.prompt
+    return data.choices?.[0]?.message?.content?.trim() || request.prompt
   } catch (error) {
     console.error("Prompt enhancement error:", error)
-    return request.prompt // Return original if enhancement fails
+    return request.prompt
   }
 }
 

@@ -288,7 +288,7 @@ const WebContainerPreview: React.FC<WebContainerPreviewProps> = ({
         
         // Check package.json to determine which script to run
         let startCommand = ["start"];
-        let useYarn = true;
+        const useYarn = true;
         try {
           const packageJson = await instance.fs.readFile('package.json', 'utf-8');
           const pkg = JSON.parse(packageJson);

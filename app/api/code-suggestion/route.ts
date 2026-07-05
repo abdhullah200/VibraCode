@@ -124,18 +124,19 @@ Generate suggestion:`
 //Generate suggestion using AI service
 async function generateSuggestion(prompt: string): Promise<string> {
   try {
-    // Replace this with your actual AI service call
-    const response = await fetch("http://localhost:11434/api/generate", {
+    const response = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NVIDIA_API_KEY}`,
+        Connection: "close",
+      },
       body: JSON.stringify({
-        model: "codellama:latest",
-        prompt,
+        model: "meta/llama-3.3-70b-instruct",
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0.7,
+        max_tokens: 300,
         stream: false,
-        options: {
-          temperature: 0.7,
-          max_tokens: 300,
-        },
       }),
     })
 
@@ -144,7 +145,7 @@ async function generateSuggestion(prompt: string): Promise<string> {
     }
 
     const data = await response.json()
-    let suggestion = data.response
+    let suggestion: string = data.choices?.[0]?.message?.content ?? ""
 
     // Clean up the suggestion
     if (suggestion.includes("```")) {
