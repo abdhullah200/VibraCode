@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils"
 import type { HttpMethod } from "@/features/api-test/lib/endpoints"
 
 export interface HistoryEntry {
-  id        : string
-  method    : HttpMethod | string
-  url       : string
-  status    : number
+  id: string
+  method: HttpMethod | string
+  url: string
+  status: number
   durationMs: number
-  timestamp : string
+  timestamp: string
 }
 
 interface HistoryPanelProps {

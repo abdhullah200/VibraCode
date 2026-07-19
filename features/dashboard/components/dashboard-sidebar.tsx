@@ -62,6 +62,7 @@ const lucideIconMap: Record<string, LucideIcon> = {
 
 // Starter template types
 const STARTER_TEMPLATES = ["REACT", "NEXTJS", "EXPRESS", "VUE", "HONO", "ANGULAR"];
+const API_TEST_ROUTE = "/api-test"
 
 export function DashboardSidebar({ initialPlaygroundData }: { initialPlaygroundData: PlaygroundData[] }) {
   const pathname = usePathname()
@@ -69,6 +70,14 @@ export function DashboardSidebar({ initialPlaygroundData }: { initialPlaygroundD
   const [isModalOpen, setIsModalOpen] = useState(false)
   
   const recentPlaygrounds = initialPlaygroundData.slice(0, 5) // Show last 5 recent items
+
+  const getPlaygroundHref = (playground: PlaygroundData) => {
+    if (playground.name === "API Prototype" || playground.id === "pg-1") {
+      return API_TEST_ROUTE
+    }
+
+    return `/playground/${playground.id}`
+  }
 
   const handleCreatePlayground = async (data: {
     title: string;
@@ -146,14 +155,15 @@ export function DashboardSidebar({ initialPlaygroundData }: { initialPlaygroundD
                 <>
                   {recentPlaygrounds.map((playground) => {
                     const IconComponent = lucideIconMap[playground.icon] || Code2;
+                    const href = getPlaygroundHref(playground)
                     return (
                       <SidebarMenuItem key={playground.id}>
                         <SidebarMenuButton
                           asChild
-                          isActive={pathname === `/playground/${playground.id}`}
+                          isActive={pathname === href}
                           tooltip={playground.name}
                         >
-                          <Link href={`/playground/${playground.id}`}>
+                          <Link href={href}>
                             {IconComponent && <IconComponent className="h-4 w-4" />}
                             <span>{playground.name}</span>
                           </Link>
