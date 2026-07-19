@@ -1,8 +1,7 @@
 import type { Metadata } from "next"
 
 // needs to be completed
-
-//import { ApiTester } from "@/features/api-test/components/api-tester" 
+import { ApiTester } from "@/features/api-test/components/api-tester" 
 
 export const metadata: Metadata = {
   title: "API Tester | Xynraco",
@@ -20,7 +19,7 @@ export default function ApiTestPage() {
           expected.
         </p>
       </div>
-      {/* <ApiTester /> */}
+      <ApiTester /> 
     </div>
   )
 }
